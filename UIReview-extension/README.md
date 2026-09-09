@@ -9,7 +9,7 @@ Chrome MV3 extension for inspecting live interface elements and typography.
 UIReview is a self-contained Chrome extension. End users do not install Node.js, run a terminal command, or start a local service. Install it from Chrome Web Store, then complete the settings page that opens automatically:
 
 1. Create a Feishu self-built application, enable the required cloud-document permissions, and publish the application.
-2. Enter that application's App ID and App Secret in UIReview settings, then click **保存并测试连接**.
+2. Enter that application's App ID and App Secret in UIReview settings, then click **Continue**.
 3. Add the application as an editable collaborator of the Feishu document or spreadsheet used for feedback.
 4. Click UIReview in Chrome's extension toolbar and start inspecting or capturing feedback.
 
@@ -40,11 +40,11 @@ Use Rulers to show fixed pixel rulers along the top and left edges of the viewpo
 
 ## Feishu screenshot feedback
 
-1. Open UIReview's extension settings, enter your own Feishu self-built application's App ID and App Secret, then click **保存并测试连接**. No Node.js, desktop bridge, or local server is required. Credentials stay in Chrome's local extension storage and are never exposed to inspected web pages.
+1. Open UIReview's extension settings, enter your own Feishu self-built application's App ID and App Secret, then click **Continue**. No Node.js, desktop bridge, or local server is required. Credentials stay in Chrome's local extension storage and are never exposed to inspected web pages.
 2. Click **Screenshot Feedback** (crop icon) in the UIReview toolbar, then drag over the area you want to capture. Release the pointer to capture immediately and open the feedback panel beside the selected area; no extra confirmation click is required. Press `Esc` to cancel before releasing. UIReview hides its own interface before capturing.
 3. On first use, or whenever no document is selected, **Destination document** opens automatically. Later, click the document icon immediately to the left of **Send** to open or close it. Choose a saved destination, or paste a Feishu `/docx/`, `/sheets/`, or `/wiki/` link. Pasted links are validated and selected automatically, then saved locally in Chrome. The selected document name and a green connection indicator appear in the Question card. Wiki links require the Feishu application permission `wiki:node:read`.
 4. Review the cropped preview (use **Retake** if needed). Annotate with **Pen**, **Arrow**, **Rectangle**, or **Ellipse**. Each drag creates one annotation; use **Undo** or `Ctrl/Cmd + Z` to remove the most recent annotation. Enter the issue description and an optional note, then click **Send**. The annotated image is sent to the selected destination in the background, and UIReview immediately returns to region capture for the next issue. A non-blocking status toast remains visible while reporting sending, success, or failure. Press `Esc` when you are finished with continuous capture.
 
 Each user provides credentials for their own Feishu self-built application. The extension stores them locally with `chrome.storage.local`; Chrome sync is not used. The credentials are read only by the extension's background service worker and are never injected into inspected pages.
 
-For spreadsheets, UIReview appends one acceptance record with the columns `模块`, `问题截图`, `问题描述`, `开发负责人`, `状态`, and `备注`. It uses the page title for `模块`, leaves `开发负责人` empty, and defaults `状态` to `待修改`. The cropped screenshot is stored as an in-cell image in the matching `问题截图` cell. A direct `/sheets/` URL uses its `sheet` query parameter when present; otherwise UIReview uses the first visible worksheet.
+For spreadsheets, UIReview appends one acceptance record with the columns `Module`, `Screenshot`, `Description`, `Developer`, `Status`, and `Notes`. It uses the page title for `Module`, leaves `Developer` empty, and defaults `Status` to `To be modified`. The cropped screenshot is stored as an in-cell image in the matching `Screenshot` cell. A direct `/sheets/` URL uses its `sheet` query parameter when present; otherwise UIReview uses the first visible worksheet.
