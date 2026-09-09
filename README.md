@@ -1,12 +1,8 @@
-<p align="center">
+<p align="left">
   <img src="UIReview-extension/assets/uireview-logo.svg" width="240" alt="UIReview">
 </p>
 
-<p align="center">面向设计验收的 Chrome 浏览器插件</p>
-
-# UIReview
-
-UIReview 是一个面向设计验收的 Chrome 浏览器插件。它可以检查网页元素、查看布局和文字样式、测量元素间距，并把截图反馈直接发送到飞书文档或电子表格。
+UIReview 是一个面向设计验收的 Chrome 浏览器插件。它可以检查网页元素、查看布局和文字样式、测量元素间距，并把截图反馈直接发送到飞书/Lark文档或电子表格。
 
 当前版本：**1.0.0**
 
@@ -19,7 +15,7 @@ UIReview 是一个面向设计验收的 Chrome 浏览器插件。它可以检查
 - X-ray 模式：快速查看页面结构层级
 - 吸管取色：获取颜色的 HEX 和 RGB 值，并一键复制 HEX
 - 截图反馈：自定义区域截图，支持画笔、箭头、矩形、圆形和撤回
-- 飞书同步：将截图、问题描述和页面信息发送到飞书文档或电子表格
+- 云文档同步：将截图、问题描述和页面信息发送到飞书/Lark文档或电子表格
 - 完全本地配置：不需要 Node.js、本地服务或 Bridge，凭证只保存在 Chrome 扩展存储中
 
 ## 安装
