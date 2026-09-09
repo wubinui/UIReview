@@ -1,0 +1,5 @@
+.DS_Store
+UIReview-local-server/.env
+UIReview-local-server/data/
+UIReview-local-server/config.json
+outputs/

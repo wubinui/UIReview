@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>UIReview 设置</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main class="settings-page" data-node-id="16:169">
+    <img class="brand-logo" src="assets/uireview-logo.svg" width="120" height="40" alt="UIReview" data-node-id="20:304">
+
+    <section class="connection" data-node-id="16:179">
+      <p class="setup-help" data-node-id="19:248">
+        使用前请先在<a href="https://open.feishu.cn/app" target="_blank" rel="noreferrer">飞书/Lark开放平台，</a>
+        创建应用并申请相关权限
+        <a href="https://github.com/wubinui/UIReview/blob/main/UIReview-SOURCE-README.md#连接飞书" target="_blank" rel="noreferrer">使用教程</a>
+      </p>
+
+      <div class="status" id="status" data-node-id="16:229" role="status" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="statusText">等待连接应用</span>
+        <button class="clear-config" type="button" id="clearConfig" hidden>删除</button>
+      </div>
+
+      <form id="form" novalidate>
+        <label class="sr-only" for="appId">App ID</label>
+        <input id="appId" name="appId" autocomplete="off" placeholder="App ID" aria-describedby="message">
+
+        <label class="sr-only" for="appSecret">App Secret</label>
+        <input id="appSecret" name="appSecret" type="password" autocomplete="new-password" placeholder="App Secret" aria-describedby="message">
+
+        <p class="message" id="message" aria-live="polite"></p>
+
+        <button class="continue-button" type="submit" id="save" data-node-id="16:201">
+          <span>Continue</span>
+        </button>
+      </form>
+    </section>
+
+    <section class="connection-copy" data-node-id="16:236">
+      <h2 data-node-id="16:237">连接应用</h2>
+      <p data-node-id="16:238">连接成功后即可关闭此页面，通过浏览器工具栏打开 UIReview 即可使用，凭证仅保存在当前 Chrome 的扩展存储中，不经过网页且 UIReview 无需服务器，不会泄漏任何文档数据。</p>
+    </section>
+  </main>
+
+  <script src="feishu-client.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
