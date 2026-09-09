@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="UIReview-extension/assets/uireview-logo.svg" width="240" alt="UIReview">
+</p>
+
+<p align="center">面向设计验收的 Chrome 浏览器插件</p>
+
 # UIReview
 
 UIReview 是一个面向设计验收的 Chrome 浏览器插件。它可以检查网页元素、查看布局和文字样式、测量元素间距，并把截图反馈直接发送到飞书文档或电子表格。
