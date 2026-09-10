@@ -97,7 +97,7 @@ UIReview keeps high-frequency work aligned with the browser's rendering cycle. P
 
 ```text
 UIReview/
-├── UIReview-1.0.0-new-toolbar.zip  # Ready-to-install 1.0.0 package
+├── UIReview-1.0.0.zip              # Ready-to-install 1.0.0 package
 └── UIReview-extension/             # Chrome Manifest V3 extension source
     ├── manifest.json               # Extension configuration and permissions
     ├── content.js                  # Inspection, measurement, capture, and feedback UI
