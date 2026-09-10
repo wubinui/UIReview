@@ -8,9 +8,13 @@ Current version: **1.0.0**
 
 ## Features
 
-- Element inspection with size, layout, spacing, and parent information
+- Element inspection with precise tag, ID, classes, size, box model, spacing, and flex-axis information
+- Overlapping-element cycling and keyboard DOM hierarchy navigation
+- CSS selector finder with multi-match highlighting and previous/next navigation
+- Draggable live inspector plus multiple pinned comparison cards
+- Best-effort author-style forcing for detected `:hover`, `:focus`, and `:active` states
 - Typography inspection with text color, font size, font weight, line height, radius, background, and opacity
-- `Alt` spacing measurements between elements
+- Automatic spacing measurements from the locked element to the element under the cursor
 - Pixel rulers along the top and left edges of the viewport
 - X-ray mode for quickly viewing page structure
 - Native eyedropper with HEX and RGB values and one-click HEX copy
@@ -47,7 +51,7 @@ UIReview calls Feishu directly from the Chrome extension service worker. It does
 
 ## Controls
 
-The floating toolbar can be dragged. Hover a tool to see its English name and shortcut.
+The floating toolbar opens expanded with no active tool. It can be dragged, and hovering a tool shows its English name and shortcut. The arrow segments beside Inspect and Screenshot open their related menus. Press `Esc` to close the current menu, panel, or active tool first; when nothing is active, press `Esc` again to collapse the toolbar into the UIReview logo. Click the logo to expand it, or long-press and drag the logo to move it without expanding. The browser toolbar icon still fully shows or hides UIReview.
 
 | Tool | Shortcut | Description |
 | --- | --- | --- |
@@ -56,11 +60,16 @@ The floating toolbar can be dragged. Hover a tool to see its English name and sh
 | Rulers | `R` | Show top and left pixel rulers |
 | Eyedropper | `P` | Use the browser's native color picker |
 | X-ray | `X` | View page structure |
+| CSS Selector Finder | `F` | Find and highlight elements with a native CSS selector |
 | Screenshot Feedback | `C` | Capture a region and write feedback |
 | Settings | `S` | Open UIReview settings |
-| Close | `Esc` | Close the active tool or feedback window |
+| Close / collapse | `Esc` | Close the current UI layer or tool, then collapse the idle toolbar |
 
-In Inspect mode, click an element to keep it selected. Hold `Alt` while moving over another element to measure the distance between them. In Screenshot Feedback mode, drag over an area and release; the feedback window opens immediately without an extra confirmation step.
+In Inspect mode, hover an element to see its box model and layout details, then click it to keep its border selected. Click the same element again to cancel the selection, or click another element to move the selection. Move over any other element to measure horizontal and vertical distances automatically—no modifier key is required. Flex and grid containers also outline their visible direct children. Use `Tab` / `Shift + Tab` to cycle through overlapping elements under the pointer, `Alt/Option + Shift + ↑` to select the parent, and `Alt/Option + Shift + ↓` to select the first visible child. Press `Space` to pin the current inspector card; pinned cards can be dragged and closed independently.
+
+The box-model overlay uses orange for margin and green for padding, with per-edge values. When the selected element has matching author CSS, the inspector can preview detected `:hover`, `:focus`, and `:active` states. This is a best-effort browser-extension preview rather than Chrome DevTools' internal pseudo-state engine; cross-origin stylesheets and complex ancestor pseudo selectors may not be available.
+
+In Screenshot Feedback mode, drag over an area and release; the feedback window opens immediately without an extra confirmation step.
 
 ## Screenshot feedback
 

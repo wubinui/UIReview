@@ -11,12 +11,16 @@ const clearConfigButton = $("clearConfig");
 
 let configured = false;
 
+const updatePrimaryButton = () => {
+  continueLabel.textContent = configured ? "Close" : "Continue";
+};
+
 const setBusy = value => {
   appId.disabled = value;
   appSecret.disabled = value;
   continueButton.disabled = value;
   clearConfigButton.disabled = value;
-  continueLabel.textContent = value ? "Connecting..." : "Continue";
+  continueLabel.textContent = value ? "Connecting..." : configured ? "Close" : "Continue";
 };
 
 const showMessage = (text = "", type = "") => {
@@ -33,12 +37,23 @@ const showStatus = ({ connected = false, error = false, text }) => {
 async function refresh() {
   const status = await UIReviewFeishu.status();
   configured = status.configured;
+  updatePrimaryButton();
   showStatus({ connected: configured, text: configured ? `应用已连接 · ${status.appId}` : "等待连接应用" });
   appId.placeholder = configured ? status.appId : "App ID";
 }
 
 form.addEventListener("submit", async event => {
   event.preventDefault();
+  if (configured) {
+    try {
+      chrome.runtime.sendMessage({ type: "close-options-tab" }, response => {
+        if (chrome.runtime.lastError || !response?.ok) window.close();
+      });
+    } catch (_) {
+      window.close();
+    }
+    return;
+  }
   const nextAppId = appId.value.trim();
   const nextSecret = appSecret.value.trim();
 
@@ -61,6 +76,7 @@ form.addEventListener("submit", async event => {
       ? await UIReviewFeishu.saveConfig(nextAppId, nextSecret)
       : await UIReviewFeishu.testConfig();
     configured = true;
+    updatePrimaryButton();
     appId.value = "";
     appSecret.value = "";
     showStatus({ connected: true, text: `应用已连接 · ${result.appId}` });
@@ -82,6 +98,7 @@ clearConfigButton.addEventListener("click", async () => {
   try {
     await UIReviewFeishu.clearConfig();
     configured = false;
+    updatePrimaryButton();
     appId.value = "";
     appSecret.value = "";
     appId.placeholder = "App ID";

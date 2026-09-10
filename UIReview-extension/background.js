@@ -79,6 +79,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     openSettings(sendResponse);
     return true;
   }
+  if (message?.type === "close-options-tab") {
+    if (!sender.tab?.id) {
+      sendResponse({ ok: false, error: "Unable to identify the settings tab" });
+      return;
+    }
+    try {
+      chrome.tabs.remove(sender.tab.id, () => {
+        const error = chrome.runtime.lastError;
+        sendResponse(error ? { ok: false, error: error.message } : { ok: true });
+      });
+    } catch (error) {
+      sendResponse({ ok: false, error: error.message });
+    }
+    return true;
+  }
   if (message?.type === "document-state") {
     chrome.storage.local.get({ uiReviewDocuments: [], uiReviewSelectedDocumentId: "" })
       .then(saved => sendResponse({
