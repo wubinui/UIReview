@@ -55,7 +55,7 @@ UIReview calls Feishu directly from the Chrome extension service worker. It does
 
 ## Controls
 
-The floating toolbar opens expanded with no active tool. It can be dragged, and hovering a tool shows its English name and shortcut. The arrow segments beside Inspect and Screenshot open their related menus. Press `Esc` to close the current menu, panel, or active tool first; when nothing is active, press `Esc` again to collapse the toolbar into the UIReview logo. Click the logo to expand it, or long-press and drag the logo to move it without expanding. The browser toolbar icon still fully shows or hides UIReview.
+The floating toolbar opens expanded with no active tool. It can be dragged, and hovering a tool shows its English name and shortcut. The arrow segments beside Inspect and Screenshot open their related menus. The main Menu contains Inspector settings and an explicit Exit UIReview action. Menus and settings automatically open above or below the toolbar and stay inside the viewport when the toolbar is placed near an edge. Press `Esc` to close the current menu, panel, or active tool first; when nothing is active, press `Esc` again to collapse the toolbar into the UIReview logo. Click the logo to expand it, or long-press and drag the logo to move it without expanding. The browser toolbar icon still fully shows or hides UIReview.
 
 | Tool | Shortcut | Description |
 | --- | --- | --- |
@@ -66,14 +66,14 @@ The floating toolbar opens expanded with no active tool. It can be dragged, and 
 | X-ray | `X` | View page structure |
 | CSS Selector Finder | `F` | Find and highlight elements with a native CSS selector |
 | Screenshot Feedback | `C` | Capture a region and write feedback |
-| Settings | `S` | Open UIReview settings |
+| Menu | `M` | Open Inspector settings or exit UIReview |
 | Close / collapse | `Esc` | Close the current UI layer or tool, then collapse the idle toolbar |
 
 In Inspect mode, hover an element to see its box model and layout details, then click it to keep its border selected. Click the same element again to cancel the selection, or click another element to move the selection. Move over any other element to measure horizontal and vertical distances automatically—no modifier key is required. Flex and grid containers also outline their visible direct children. Use `Tab` / `Shift + Tab` to cycle through overlapping elements under the pointer, `Alt/Option + Shift + ↑` to select the parent, and `Alt/Option + Shift + ↓` to select the first visible child. Press `Space` to pin the current inspector card; pinned cards can be dragged and closed independently.
 
 The box-model overlay uses tinted regions and per-edge values for margin, padding, and gap. When the selected element has matching author CSS, the inspector can preview detected `:hover`, `:focus`, and `:active` states. This is a best-effort browser-extension preview rather than Chrome DevTools' internal pseudo-state engine; cross-origin stylesheets and complex ancestor pseudo selectors may not be available.
 
-In Screenshot Feedback mode, drag over an area and release; the feedback window opens immediately without an extra confirmation step.
+In Screenshot Feedback mode, drag over an area and release; the feedback window opens immediately without an extra confirmation step. Screenshot cropping and destination loading continue in the background, with a lightweight preview state instead of blocking the feedback form.
 
 ## Screenshot feedback
 
