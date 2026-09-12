@@ -105,6 +105,8 @@
 
   window.chrome = { ...(window.chrome || {}), runtime };
   window.__UIREVIEW_DEMO__ = {
+    locked: true,
+    manageToolbarGeometry: true,
     toggle() {
       messageListeners.forEach((listener) => listener({ type: "toggle" }, {}, () => {}));
     },

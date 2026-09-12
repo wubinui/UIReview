@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Learn how UIReview processes interface inspection, screenshots, feedback, and Feishu credentials."
+    />
+    <title>Privacy — UIReview</title>
+    <link rel="icon" href="assets/figma/brand-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=20260913-3" />
+  </head>
+  <body class="legal-body">
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="UIReview home">
+          <img src="assets/figma/brand-icon.svg" width="24" height="24" alt="" />
+          <img src="assets/figma/brand-wordmark.svg" width="72" height="24" alt="UIReview" />
+        </a>
+        <a class="install-button" href="https://github.com/wubinui/UIReview/raw/refs/heads/main/UIReview-1.0.0.zip">Add to Chrome</a>
+      </nav>
+    </header>
+
+    <main class="legal-page">
+      <article class="legal-content" aria-labelledby="privacy-title">
+        <h1 id="privacy-title">UIReview Privacy</h1>
+        <div class="legal-copy">
+          <p>
+            UIReview processes interface inspection and screenshots locally in the browser. When a user explicitly sends
+            feedback, the selected screenshot, issue description, optional note, page title, page URL, and viewport size are
+            sent directly from the extension to Feishu Open Platform using the user's own self-built application.
+          </p>
+          <p>
+            The Feishu App ID and App Secret are stored in <code>chrome.storage.local</code>, with access restricted to trusted
+            extension contexts (the background service worker and settings page). They are not available to content scripts,
+            synced through Chrome Sync, injected into inspected web pages, sent to UIReview servers, or included in analytics.
+            UIReview does not operate a cloud backend.
+          </p>
+          <p>
+            Users can delete credentials and saved destination documents at any time from the UIReview settings page.
+          </p>
+        </div>
+      </article>
+
+      <footer class="site-footer">
+        <a href="about.html">About</a>
+        <a href="docs.html">Docs</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="privacy.html" aria-current="page">Privacy</a>
+        <a href="https://github.com/wubinui/UIReview" target="_blank" rel="noreferrer">Github</a>
+      </footer>
+    </main>
+    <script>
+      const siteHeader = document.querySelector(".site-header");
+      const updateHeaderBackground = () => siteHeader.classList.toggle("is-scrolled", window.scrollY > 0);
+      window.addEventListener("scroll", updateHeaderBackground, { passive: true });
+      updateHeaderBackground();
+    </script>
+  </body>
+</html>

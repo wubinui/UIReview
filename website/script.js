@@ -2,7 +2,9 @@ const toolbarDock = document.querySelector(".toolbar-dock");
 const siteHeader = document.querySelector(".site-header");
 const overlayHost = document.querySelector("#uireview-overlay-host");
 const demoCursor = document.querySelector(".demo-cursor");
+const inspectGuide = document.querySelector(".inspect-guide");
 const heroCopy = document.querySelector(".hero-copy");
+const heroDescription = heroCopy?.querySelector("p");
 const features = document.querySelector(".features");
 
 let toolbar;
@@ -12,10 +14,17 @@ let isDocked = false;
 let demoRun = 0;
 let demoActive = false;
 let demoStopped = false;
+let inspectGuideVisible = false;
+let inspectGuideTimer;
+let lastScrollY = window.scrollY;
 let cursorPoint = { x: -40, y: -40 };
+const demoTakeoverEvents = new Set(["mousedown", "pointerdown", "keydown", "touchstart", "wheel"]);
 
 const easeInOutQuad = (progress) =>
   progress < 0.5 ? 2 * progress * progress : 1 - ((-2 * progress + 2) ** 2) / 2;
+
+const easeInOutCubic = (progress) =>
+  progress < 0.5 ? 4 * progress ** 3 : 1 - ((-2 * progress + 2) ** 3) / 2;
 
 function setCursorPoint(point) {
   cursorPoint = point;
@@ -120,7 +129,44 @@ function stopFeatureDemo() {
   demoRun += 1;
   demoCursor.getAnimations().forEach((animation) => animation.cancel());
   demoCursor.classList.remove("is-visible", "is-pressed", "is-rippling");
+  hideInspectGuide(true);
   window.__UIREVIEW_DEMO__?.hide?.();
+}
+
+function positionInspectGuide() {
+  if (!inspectGuideVisible || !toolbar || !inspectGuide) return;
+  const inspectButton = toolbar.querySelector('[data-mode="inspect"]');
+  if (!inspectButton) return;
+  const rect = inspectButton.getBoundingClientRect();
+  inspectGuide.style.left = `${rect.left + rect.width / 2}px`;
+  inspectGuide.style.top = `${rect.top}px`;
+}
+
+function showInspectGuide() {
+  if (!inspectGuide || !toolbar || demoStopped) return;
+  clearTimeout(inspectGuideTimer);
+  inspectGuideVisible = true;
+  inspectGuide.hidden = false;
+  inspectGuide.setAttribute("aria-hidden", "false");
+  positionInspectGuide();
+  requestAnimationFrame(() => {
+    if (inspectGuideVisible) inspectGuide.classList.add("is-visible");
+  });
+}
+
+function hideInspectGuide(immediate = false) {
+  if (!inspectGuide) return;
+  clearTimeout(inspectGuideTimer);
+  inspectGuideVisible = false;
+  inspectGuide.classList.remove("is-visible");
+  inspectGuide.setAttribute("aria-hidden", "true");
+  if (immediate) {
+    inspectGuide.hidden = true;
+    return;
+  }
+  inspectGuideTimer = setTimeout(() => {
+    if (!inspectGuideVisible) inspectGuide.hidden = true;
+  }, 280);
 }
 
 const scrollToY = (targetY, duration, run) =>
@@ -128,12 +174,20 @@ const scrollToY = (targetY, duration, run) =>
     const startY = window.scrollY;
     const distance = targetY - startY;
     const started = performance.now();
+    let finished = false;
+    const finish = (result) => {
+      if (finished) return;
+      finished = true;
+      document.documentElement.classList.remove("demo-controlled-scroll");
+      resolve(result);
+    };
+    document.documentElement.classList.add("demo-controlled-scroll");
     const frame = (now) => {
-      if (run !== demoRun || demoStopped) return resolve(false);
+      if (run !== demoRun || demoStopped) return finish(false);
       const progress = Math.min(1, (now - started) / duration);
-      window.scrollTo(0, startY + distance * easeInOutQuad(progress));
+      window.scrollTo(0, startY + distance * easeInOutCubic(progress));
       if (progress < 1) requestAnimationFrame(frame);
-      else resolve(true);
+      else finish(true);
     };
     requestAnimationFrame(frame);
   });
@@ -201,15 +255,22 @@ async function runFeatureDemo() {
   demoCursor.classList.remove("is-visible");
   await wait(300, run);
   demoActive = false;
+  showInspectGuide();
 }
 
 function handleRealInteraction(event) {
+  if (
+    inspectGuideVisible &&
+    event.isTrusted &&
+    demoTakeoverEvents.has(event.type)
+  ) {
+    hideInspectGuide();
+  }
   if (demoStopped && event.isTrusted && (event.type === "mousemove" || event.type === "pointermove")) {
     window.__UIREVIEW_DEMO__?.show?.();
     return;
   }
-  if (!demoActive || !event.isTrusted) return;
-  if (event.type === "mousemove" && Math.abs(event.movementX) + Math.abs(event.movementY) < 3) return;
+  if (!demoActive || !event.isTrusted || !demoTakeoverEvents.has(event.type)) return;
   stopFeatureDemo();
 }
 
@@ -266,6 +327,8 @@ function positionUIReviewLayer(layer, anchor, { gap = 8, align = "left" } = {}) 
 function syncUIReviewLayerGeometry() {
   const shadow = overlayHost?.shadowRoot;
   if (!shadow || !toolbar) return;
+
+  positionInspectGuide();
 
   const menu = shadow.querySelector(".tool-menu:not([hidden])");
   if (menu) {
@@ -346,15 +409,28 @@ function setToolbarDocked(nextDocked, animate = true) {
 
 function updateScrollState() {
   scrollFrame = undefined;
-  siteHeader.classList.toggle("is-scrolled", window.scrollY > 24);
-  if (window.scrollY < window.innerHeight * 0.4) document.body.classList.remove("demo-act2");
+  const currentScrollY = window.scrollY;
+  const scrollDelta = currentScrollY - lastScrollY;
+  const hasPassedHeroDescription = heroDescription
+    ? heroDescription.getBoundingClientRect().bottom <= siteHeader.getBoundingClientRect().top
+    : false;
+
+  siteHeader.classList.toggle("is-scrolled", currentScrollY > 0);
+  if (!hasPassedHeroDescription || scrollDelta < 0) {
+    siteHeader.classList.remove("is-compact");
+  } else if (scrollDelta > 0) {
+    siteHeader.classList.add("is-compact");
+  }
+  lastScrollY = currentScrollY;
+
+  if (currentScrollY < window.innerHeight * 0.4) document.body.classList.remove("demo-act2");
 
   if (!toolbar) return;
   if (!isDocked && window.scrollY > 32) {
     setToolbarDocked(true);
   } else if (isDocked && window.scrollY <= 8) {
     setToolbarDocked(false);
-  } else {
+  } else if (!isDocked) {
     setDemoToolbarGeometry();
     syncUIReviewLayerGeometry();
   }
@@ -401,6 +477,7 @@ function startUIReviewDemo() {
     #app.website-demo-hide-inspection .layout-children-layer,
     #app.website-demo-hide-inspection .selection-guide-layer,
     #app.website-demo-hide-inspection > .panel:not(.pinned) { display: none !important; }
+    #app > .hint { display: none !important; }
     @media (max-width: 360px) { .toolbar { gap: 2px; } }
   `;
   overlayHost.shadowRoot.appendChild(demoStyles);

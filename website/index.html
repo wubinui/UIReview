@@ -9,12 +9,12 @@
     />
     <title>UIReview — Inspect, compare, and share UI feedback</title>
     <link rel="icon" href="assets/figma/brand-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20260912-5" />
+    <link rel="stylesheet" href="styles.css?v=20260913-3" />
     <link rel="stylesheet" href="UIReview/xray.css?v=20260912-5" />
     <script src="assets/vendor/html2canvas.min.js" defer></script>
-    <script src="demo-adapter.js?v=20260912-5" defer></script>
-    <script src="UIReview/content.js?v=20260912-5" defer></script>
-    <script src="script.js?v=20260912-5" defer></script>
+    <script src="demo-adapter.js?v=20260913-1" defer></script>
+    <script src="UIReview/content.js?v=20260913-4" defer></script>
+    <script src="script.js?v=20260913-6" defer></script>
   </head>
   <body>
     <header class="site-header">
@@ -33,7 +33,7 @@
           <h1 id="hero-title">Inspect &amp; compare spacing<br />then send to docs</h1>
           <p>
             Inspect elements, compare spacing, capture screenshots, annotate and describe<br class="desktop-break" />
-            issues—then sync to cloud docs in one click.
+            issues—then sync to cloud docs in one click
           </p>
         </div>
 
@@ -65,7 +65,7 @@
             <span class="feature-icon" aria-hidden="true"></span>
             <h3>Undo</h3>
             <p>undo annotation</p>
-            <kbd>Command</kbd>
+            <kbd>Command + Z</kbd>
           </div>
           <div class="feature-row">
             <img class="feature-icon" src="assets/figma/feature-xray.svg" width="20" height="20" alt="" />
@@ -107,11 +107,11 @@
       </section>
 
       <footer class="site-footer">
-        <a href="https://github.com/wubinui/UIReview/commits/main" target="_blank" rel="noreferrer">Changelog</a>
-        <a href="https://github.com/wubinui/UIReview#readme" target="_blank" rel="noreferrer">Docs</a>
-        <a href="https://github.com/wubinui/UIReview#uireview" target="_blank" rel="noreferrer">About</a>
+        <a href="about.html">About</a>
+        <a href="docs.html">Docs</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="privacy.html">Privacy</a>
         <a href="https://github.com/wubinui/UIReview" target="_blank" rel="noreferrer">Github</a>
-        <a href="https://github.com/wubinui/UIReview/blob/main/UIReview-extension/PRIVACY.md" target="_blank" rel="noreferrer">Privacy</a>
       </footer>
     </main>
 
@@ -120,6 +120,11 @@
         <path d="M2.2 1.7 25.8 18a1.2 1.2 0 0 1-.63 2.19l-9.24.5-4.69 8.44a1.2 1.2 0 0 1-2.22-.3L.33 3.02A1.2 1.2 0 0 1 2.2 1.7Z" />
       </svg>
       <span class="demo-cursor-ring"></span>
+    </div>
+
+    <div class="inspect-guide" role="status" aria-live="polite" aria-hidden="true" hidden>
+      <span class="inspect-guide-bubble">Click Inspect to try it</span>
+      <span class="inspect-guide-ring" aria-hidden="true"></span>
     </div>
   </body>
 </html>

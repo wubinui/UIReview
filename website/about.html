@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="About UIReview, a fast browser-native tool for visual interface review." />
+    <title>About — UIReview</title>
+    <link rel="icon" href="assets/figma/brand-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=20260913-3" />
+  </head>
+  <body class="legal-body">
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="UIReview home">
+          <img src="assets/figma/brand-icon.svg" width="24" height="24" alt="" />
+          <img src="assets/figma/brand-wordmark.svg" width="72" height="24" alt="UIReview" />
+        </a>
+        <a class="install-button" href="https://github.com/wubinui/UIReview/raw/refs/heads/main/UIReview-1.0.0.zip">Add to Chrome</a>
+      </nav>
+    </header>
+
+    <main class="legal-page">
+      <article class="legal-content content-article" aria-labelledby="about-title">
+        <p class="content-kicker">About</p>
+        <h1 id="about-title">A faster way to review interfaces.</h1>
+        <div class="content-copy">
+          <section class="content-section">
+            <h2>See what the browser sees</h2>
+            <p>
+              UIReview is a self-contained Chrome extension for inspecting layouts, comparing spacing, checking typography,
+              and understanding the structure of a live interface without leaving the page.
+            </p>
+          </section>
+          <section class="content-section">
+            <h2>Turn observations into feedback</h2>
+            <p>
+              Capture any region, annotate it with lightweight drawing tools, describe the issue, and send the complete
+              context directly to a Feishu or Lark document in one flow.
+            </p>
+          </section>
+          <section class="content-section">
+            <h2>Local by design</h2>
+            <p>
+              Inspection and screenshots are processed in the browser. UIReview has no cloud backend, and each user connects
+              their own Feishu application when they choose to send feedback.
+            </p>
+          </section>
+        </div>
+      </article>
+
+      <footer class="site-footer">
+        <a href="about.html" aria-current="page">About</a>
+        <a href="docs.html">Docs</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="https://github.com/wubinui/UIReview" target="_blank" rel="noreferrer">Github</a>
+      </footer>
+    </main>
+    <script>
+      const siteHeader = document.querySelector(".site-header");
+      const updateHeaderBackground = () => siteHeader.classList.toggle("is-scrolled", window.scrollY > 0);
+      window.addEventListener("scroll", updateHeaderBackground, { passive: true });
+      updateHeaderBackground();
+    </script>
+  </body>
+</html>

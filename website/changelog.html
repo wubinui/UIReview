@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="UIReview release notes and product updates." />
+    <title>Changelog — UIReview</title>
+    <link rel="icon" href="assets/figma/brand-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=20260913-3" />
+  </head>
+  <body class="legal-body">
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="UIReview home">
+          <img src="assets/figma/brand-icon.svg" width="24" height="24" alt="" />
+          <img src="assets/figma/brand-wordmark.svg" width="72" height="24" alt="UIReview" />
+        </a>
+        <a class="install-button" href="https://github.com/wubinui/UIReview/raw/refs/heads/main/UIReview-1.0.0.zip">Add to Chrome</a>
+      </nav>
+    </header>
+
+    <main class="legal-page">
+      <article class="legal-content content-article" aria-labelledby="changelog-title">
+        <p class="content-kicker">Changelog</p>
+        <h1 id="changelog-title">What’s new in UIReview.</h1>
+        <div class="content-copy">
+          <section class="release-entry">
+            <div class="release-meta">
+              <h2>Version 1.0.0</h2>
+              <span>September 2026</span>
+            </div>
+            <ul>
+              <li>Inspect live interfaces with box model, layout, typography, and spacing details.</li>
+              <li>Lock selections, compare elements, search with CSS selectors, and pin style panels.</li>
+              <li>Capture custom regions and annotate with pen, arrow, rectangle, and ellipse tools.</li>
+              <li>Send screenshots and issue context directly to Feishu or Lark documents and spreadsheets.</li>
+              <li>Added X-ray, pixel rulers, native eyedropper, keyboard commands, and local-only credential storage.</li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+      <footer class="site-footer">
+        <a href="about.html">About</a>
+        <a href="docs.html">Docs</a>
+        <a href="changelog.html" aria-current="page">Changelog</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="https://github.com/wubinui/UIReview" target="_blank" rel="noreferrer">Github</a>
+      </footer>
+    </main>
+    <script>
+      const siteHeader = document.querySelector(".site-header");
+      const updateHeaderBackground = () => siteHeader.classList.toggle("is-scrolled", window.scrollY > 0);
+      window.addEventListener("scroll", updateHeaderBackground, { passive: true });
+      updateHeaderBackground();
+    </script>
+  </body>
+</html>
