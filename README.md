@@ -1,4 +1,8 @@
-# UIReview Plugin
+<h1 align="center">
+  <img src="assets/icon.svg" alt="UIReview icon" width="48" height="48" />
+  &nbsp;
+  <img src="assets/uireview-logo.svg" alt="UIReview" width="144" height="48" />
+</h1>
 
 UIReview is a Chrome extension for inspecting live interfaces, comparing spacing, reviewing typography, capturing annotated screenshots, and sending feedback to Feishu/Lark documents.
 
@@ -35,9 +39,16 @@ Enter the App ID and App Secret in UIReview settings. Add the application as an 
 
 ## Controls
 
-Click the browser toolbar button or use `Ctrl/Cmd + Shift + M` to open UIReview. While a tool is active, page interaction is blocked so elements can be inspected safely. Press `Esc` to close the active tool and restore normal page interaction.
+Click the browser toolbar button or use the shortcut below to toggle UIReview. While a tool is active, page interaction is blocked so elements can be inspected safely.
 
-The toolbar provides Inspect, Typography, Rulers, Eyedropper, X-ray, Screenshot Feedback, and Menu. In a feedback dialog, `Enter` sends the report, `Shift + Enter` inserts a line break, and `Esc` closes the dialog. After selecting an element, move the pointer over another element to see spacing measurements.
+| Action | macOS | Windows / Linux |
+| --- | --- | --- |
+| Toggle UIReview | <kbd>⌘ Cmd</kbd> + <kbd>⇧ Shift</kbd> + <kbd>M</kbd> | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> |
+| Close the active tool or feedback dialog | <kbd>Esc</kbd> | <kbd>Esc</kbd> |
+| Send feedback · in the feedback dialog | <kbd>↵ Enter</kbd> | <kbd>Enter</kbd> |
+| Insert a line break · in a feedback text field | <kbd>⇧ Shift</kbd> + <kbd>↵ Enter</kbd> | <kbd>Shift</kbd> + <kbd>Enter</kbd> |
+
+Closing the active tool restores normal page interaction. The toolbar provides Inspect, Typography, Rulers, Eyedropper, X-ray, Screenshot Feedback, and Menu. After selecting an element, move the pointer over another element to see spacing measurements.
 
 ## Screenshot feedback
 
