@@ -58,6 +58,11 @@ Closing the active tool restores normal page interaction. After selecting an ele
 
 Choose **Screenshot Feedback**, drag a region, and release. The feedback panel opens automatically while the preview and destination document load in the background. Add a description, optional note, and annotations, then press **Send**. For Sheets destinations, UIReview creates the columns `Module`, `Screenshot`, `Description`, `Developer`, `Status`, and `Notes`; status defaults to `To be modified`, and the screenshot is inserted as an in-cell image.
 
+| Function | Action | Shortcut |
+| --- | --- | --- |
+| Send | Sync to cloud docs | <kbd>Enter</kbd> |
+| Undo | Undo annotation | <kbd>⌘ Command</kbd> + <kbd>Z</kbd> |
+
 ## Development checks
 
 ```bash
