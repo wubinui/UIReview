@@ -90,6 +90,8 @@ While inspecting elements, typography, or CSS selector matches, press <kbd>C</kb
 | Send | Sync to cloud docs | <kbd>Enter</kbd> |
 | Undo | Undo annotation | <kbd>⌘&nbsp;Command</kbd>&nbsp;+&nbsp;<kbd>Z</kbd> |
 
+When an input method is composing text (for example, selecting Chinese characters), Enter confirms the text without sending feedback. Press Enter again after confirmation to send, or Shift + Enter to insert a line break in the description.
+
 ## Development checks
 
 ```bash
