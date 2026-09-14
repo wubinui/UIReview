@@ -81,7 +81,7 @@ form.addEventListener("submit", async event => {
     appSecret.value = "";
     showStatus({ connected: true, text: `应用已连接 · ${result.appId}` });
     appId.placeholder = result.appId;
-    showMessage("连接成功，可以关闭此页面并开始使用 UIReview。", "success");
+    showMessage("应用连接成功。发送前，请在目标文档中添加此应用为协作者并授予编辑权限。", "success");
   } catch (error) {
     showStatus({ error: true, text: "连接失败" });
     showMessage(error.message || "飞书应用连接失败，请检查凭证后重试。", "error");

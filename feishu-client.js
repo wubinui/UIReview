@@ -54,6 +54,11 @@ globalThis.UIReviewFeishu = (() => {
     const data = await response.json().catch(() => ({}));
     if (!response.ok || data.code !== 0) {
       const error = new Error(data.msg || `飞书请求失败 (${response.status})`);
+      if (/node permission denied|tenant needs (?:read|write) permission/i.test(error.message)) {
+        error.message = pathname.startsWith("/wiki/")
+          ? "飞书应用无权读取此 Wiki 节点。请让知识库管理员授予该自建应用目标节点的访问权限，并为目标文档授予编辑权限后重试。"
+          : "飞书应用无权访问目标文档或电子表格。请在目标文件中添加配置的自建应用为协作者，并授予编辑权限后重试；个人账号能打开文件不代表应用已获授权。";
+      }
       error.feishuCode = data.code;
       error.requestId = response.headers.get("x-tt-logid") || response.headers.get("x-request-id") || "";
       error.endpoint = pathname.split("?", 1)[0];

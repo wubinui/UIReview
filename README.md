@@ -76,6 +76,8 @@ Closing the active tool restores normal page interaction. After selecting an ele
 
 Choose **Screenshot Feedback**, drag a region, and release. The feedback panel opens automatically while the preview and destination document load in the background. Add a description, optional note, and annotations, then press **Send**. For Sheets destinations, UIReview creates the columns `Module`, `Screenshot`, `Description`, `Developer`, `Status`, and `Notes`; status defaults to `To be modified`, and the screenshot is inserted as an in-cell image.
 
+While inspecting elements, typography, or CSS selector matches, press <kbd>C</kbd> or click **Screenshot Feedback** to capture the current inspection details. Highlights, spacing measurements, and visible style panels stay in place while you select a region and are included in the screenshot. Include the relevant panel in your selection; use <kbd>Space</kbd> before capturing to fix and move it if needed. The toolbar and capture controls are excluded. Press <kbd>Esc</kbd> to cancel and return to inspection. When typing a CSS selector, use the screenshot toolbar button so the shortcut does not interrupt your query.
+
 | Function | Action | Shortcut |
 | --- | --- | --- |
 | Send | Sync to cloud docs | <kbd>Enter</kbd> |
