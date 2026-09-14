@@ -8,6 +8,8 @@ UIReview is a Chrome extension for inspecting live interfaces, comparing spacing
 
 Current release: **1.0.0**
 
+[Website](https://uirevu.com/) · [Usage guide](https://uirevu.com/docs.html) · [GitHub](https://github.com/wubinui/UIReview-plugin)
+
 ## Features
 
 - Inspect elements with layout and style details.
@@ -29,13 +31,29 @@ UIReview is a self-contained Manifest V3 extension. End users do not need Node.j
 
 ## Connect Feishu/Lark
 
-Create and publish a self-built application in the [Feishu/Lark Open Platform](https://open.feishu.cn/). Grant these scopes:
+Create a self-built application in the [Feishu/Lark Open Platform](https://open.feishu.cn/). Grant these application scopes, then publish the application version so they take effect:
 
 - `docx:document` — create and edit Docs content.
 - `drive:drive` — access files and spreadsheets.
 - `wiki:node:read` — resolve Wiki document links.
 
 Enter the App ID and App Secret in UIReview settings. Add the application as an editor of the destination document or spreadsheet. Credentials are stored only in `chrome.storage.local` and are never injected into inspected pages.
+
+API permissions and access to the destination file are separate requirements. An enabled permission allows the application to call an API; it does not give the application access to every document. Connecting in UIReview verifies the application credentials, not its access to your destination.
+
+### Grant access to the destination
+
+1. Open the Feishu document or spreadsheet that will receive screenshot feedback.
+2. Ask the file owner to add the configured self-built application and grant it **edit access**. In supported documents, open the top-right **More (…) → Add document application (添加文档应用)** menu. Menu labels and availability may vary by file type and account permissions.
+3. Confirm that the added application matches the App ID configured in UIReview. Your personal account's access to the file does not grant access to the application.
+4. For `/wiki/` links, ask the knowledge base administrator to grant the application access to the target node as well. The `wiki:node:read` API permission alone does not grant node access.
+5. Return to UIReview and retry adding the destination or sending feedback.
+
+### Troubleshoot permission errors
+
+If Feishu reports `node permission denied` or `tenant needs read permission`, the application cannot access the target node. Follow the [destination access steps above](#grant-access-to-the-destination), even if all three API permissions already show as enabled in the Open Platform.
+
+If the application is missing from the selection list, confirm that it has been published and belongs to the same organization as the destination. Ask the file owner or administrator to check access if you cannot find the application menu. If access is already granted, verify that it was granted to the same application configured in UIReview and, for Wiki links, to the correct knowledge base node.
 
 ## Controls
 
@@ -61,7 +79,7 @@ Choose **Screenshot Feedback**, drag a region, and release. The feedback panel o
 | Function | Action | Shortcut |
 | --- | --- | --- |
 | Send | Sync to cloud docs | <kbd>Enter</kbd> |
-| Undo | Undo annotation | <kbd>⌘ Command</kbd> + <kbd>Z</kbd> |
+| Undo | Undo annotation | <kbd>⌘&nbsp;Command</kbd>&nbsp;+&nbsp;<kbd>Z</kbd> |
 
 ## Development checks
 
