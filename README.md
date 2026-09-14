@@ -6,9 +6,16 @@
 
 UIReview is a Chrome extension for inspecting live interfaces, comparing spacing, reviewing typography, capturing annotated screenshots, and sending feedback to Feishu/Lark documents.
 
-Current release: **1.0.0**
+Current version: **1.0.1**
 
 [Website](https://uirevu.com/) · [Usage guide](https://uirevu.com/docs.html) · [GitHub](https://github.com/wubinui/UIReview-plugin)
+
+## What's new in 1.0.1
+
+- Updated the toolbar UI.
+- Capture screenshots and send feedback directly from inspection mode, including visible highlights, spacing measurements, and style panels.
+
+See the [changelog](CHANGELOG.md) for release notes.
 
 ## Features
 
@@ -98,7 +105,7 @@ Load the repository root as an unpacked extension after making changes. There is
 ## Package for release
 
 ```bash
-zip -r UIReview-1.0.0.zip . -x '*.DS_Store' '*.zip' '.env*' 'node_modules/*'
+zip -r UIReview-1.0.1.zip . -x '*.DS_Store' '*.zip' '.env*' '.git/*' 'node_modules/*'
 ```
 
 Upload the ZIP as a GitHub Release asset or submit it to the Chrome Web Store. The static website links to the latest release asset.
