@@ -39,16 +39,20 @@ Enter the App ID and App Secret in UIReview settings. Add the application as an 
 
 ## Controls
 
-Click the browser toolbar button or use the shortcut below to toggle UIReview. While a tool is active, page interaction is blocked so elements can be inspected safely.
+Click the browser toolbar button to open UIReview, then use the shortcuts below. While a tool is active, page interaction is blocked so elements can be inspected safely.
 
-| Action | macOS | Windows / Linux |
-| --- | --- | --- |
-| Toggle UIReview | <kbd>⌘ Cmd</kbd> + <kbd>⇧ Shift</kbd> + <kbd>M</kbd> | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> |
-| Close the active tool or feedback dialog | <kbd>Esc</kbd> | <kbd>Esc</kbd> |
-| Send feedback · in the feedback dialog | <kbd>↵ Enter</kbd> | <kbd>Enter</kbd> |
-| Insert a line break · in a feedback text field | <kbd>⇧ Shift</kbd> + <kbd>↵ Enter</kbd> | <kbd>Shift</kbd> + <kbd>Enter</kbd> |
+| Shortcut | Action |
+| --- | --- |
+| <kbd>I</kbd> | Inspect elements |
+| <kbd>F</kbd> | Find by CSS selector |
+| <kbd>C</kbd> | Capture screenshot feedback |
+| <kbd>T</kbd> | Inspect typography |
+| <kbd>R</kbd> | Show pixel rulers |
+| <kbd>X</kbd> | Toggle X-ray view |
+| <kbd>P</kbd> | Open the eyedropper |
+| <kbd>Esc</kbd> | Close the current layer or collapse the toolbar |
 
-Closing the active tool restores normal page interaction. The toolbar provides Inspect, Typography, Rulers, Eyedropper, X-ray, Screenshot Feedback, and Menu. After selecting an element, move the pointer over another element to see spacing measurements.
+Closing the active tool restores normal page interaction. After selecting an element, move the pointer over another element to see spacing measurements.
 
 ## Screenshot feedback
 
