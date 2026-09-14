@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "UIReview",
+  "version": "1.0.0",
+  "description": "Inspect interfaces and send visual feedback directly to your Feishu documents.",
+  "permissions": ["activeTab", "clipboardWrite", "storage"],
+  "host_permissions": ["https://open.feishu.cn/*"],
+  "background": { "service_worker": "background.js" },
+  "options_page": "options.html",
+  "action": {
+    "default_title": "Toggle UIReview",
+    "default_icon": {
+      "16": "assets/icon-16.png",
+      "32": "assets/icon-32.png"
+    }
+  },
+  "commands": {
+    "toggle-uireview": {
+      "suggested_key": { "default": "Ctrl+Shift+M", "mac": "Command+Shift+M" },
+      "description": "Toggle UIReview overlay"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["xray.css"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/icon.svg"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "16": "assets/icon-16.png",
+    "32": "assets/icon-32.png",
+    "48": "assets/icon-48.png",
+    "128": "assets/icon-128.png"
+  }
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>UIReview 设置</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main class="settings-page" data-node-id="16:169">
+    <img class="brand-logo" src="assets/uireview-logo.svg" width="120" height="40" alt="UIReview" data-node-id="20:304">
+
+    <section class="connection" data-node-id="16:179">
+      <p class="setup-help" data-node-id="19:248">
+        使用前请先在<a href="https://open.feishu.cn/app" target="_blank" rel="noreferrer">飞书/Lark 开放平台</a>
+        创建自建应用
+        <a href="https://github.com/wubinui/UIReview-plugin#connect-feishulark" target="_blank" rel="noreferrer">使用教程</a>
+      </p>
+
+      <div class="status" id="status" data-node-id="16:229" role="status" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="statusText">等待连接应用</span>
+        <button class="clear-config" type="button" id="clearConfig" hidden>删除</button>
+      </div>
+
+      <form id="form" novalidate>
+        <label class="sr-only" for="appId">App ID</label>
+        <input id="appId" name="appId" autocomplete="off" placeholder="App ID" aria-describedby="message">
+
+        <label class="sr-only" for="appSecret">App Secret</label>
+        <input id="appSecret" name="appSecret" type="password" autocomplete="new-password" placeholder="App Secret" aria-describedby="message">
+
+        <p class="message" id="message" aria-live="polite"></p>
+
+        <button class="continue-button" type="submit" id="save" data-node-id="16:201">
+          <span>Continue</span>
+        </button>
+      </form>
+    </section>
+
+    <section class="connection-copy" data-node-id="16:236">
+      <h2 data-node-id="16:237">Connect Feishu/Lark</h2>
+      <p data-node-id="16:238">
+        Create a self-built application in the
+        <a href="https://open.feishu.cn/app" target="_blank" rel="noreferrer">Feishu Open Platform</a>, add the following
+        permissions, then enter its App ID and App Secret above.
+      </p>
+      <ul class="permission-list" aria-label="Required Feishu permissions">
+        <li><code>docx:document</code></li>
+        <li><code>drive:drive</code></li>
+        <li><code>wiki:node:read</code></li>
+      </ul>
+      <p>Credentials remain in local extension storage.</p>
+    </section>
+  </main>
+
+  <script src="feishu-client.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
