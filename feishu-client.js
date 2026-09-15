@@ -110,7 +110,7 @@ globalThis.UIReviewFeishu = (() => {
       const sheets = (sheetsData.sheets || []).filter(sheet => !sheet.hidden);
       const selected = sheets.find(sheet => sheet.sheet_id === sheetId) || sheets.sort((a, b) => (a.index || 0) - (b.index || 0))[0];
       if (!selected?.sheet_id) throw new Error("电子表格中没有可用工作表");
-      return { id, type: "sheet", sheetId: selected.sheet_id, sheetName: selected.title || "Sheet1", rowCount: selected.grid_properties?.row_count || 200, name: `${spreadsheetData.spreadsheet?.title || "未命名电子表格"} · ${selected.title || "Sheet1"}`, url: reference.url || spreadsheetData.spreadsheet?.url || `https://feishu.cn/sheets/${id}` };
+      return { id, type: "sheet", sheetId: selected.sheet_id, sheetName: selected.title || "Sheet1", rowCount: selected.grid_properties?.row_count || 200, columnCount: selected.grid_properties?.column_count || 20, name: `${spreadsheetData.spreadsheet?.title || "未命名电子表格"} · ${selected.title || "Sheet1"}`, url: reference.url || spreadsheetData.spreadsheet?.url || `https://feishu.cn/sheets/${id}` };
     }
     const data = await feishu(`/docx/v1/documents/${encodeURIComponent(id)}`);
     return { id, type: "docx", name: data.document?.title || "未命名飞书文档", url: reference.url || `https://feishu.cn/docx/${id}` };
@@ -151,14 +151,28 @@ globalThis.UIReviewFeishu = (() => {
     return feishu(`/sheets/v2/spreadsheets/${encodeURIComponent(destination.id)}/dimension_range`, { method: "PUT", headers: { "Content-Type": "application/json; charset=utf-8" }, body: JSON.stringify({ dimension: { sheetId: destination.sheetId, majorDimension, startIndex, endIndex }, dimensionProperties: { visible: true, fixedSize } }) });
   }
 
+  async function deleteSheetDimension(destination, majorDimension, startIndex, endIndex) {
+    return feishu(`/sheets/v2/spreadsheets/${encodeURIComponent(destination.id)}/dimension_range`, { method: "DELETE", headers: { "Content-Type": "application/json; charset=utf-8" }, body: JSON.stringify({ dimension: { sheetId: destination.sheetId, majorDimension, startIndex, endIndex } }) });
+  }
+
+  async function setSheetStyle(destination, range, style) {
+    return feishu(`/sheets/v2/spreadsheets/${encodeURIComponent(destination.id)}/style`, { method: "PUT", headers: { "Content-Type": "application/json; charset=utf-8" }, body: JSON.stringify({ appendStyle: { range: `${destination.sheetId}!${range}`, style } }) });
+  }
+
   async function configureAcceptanceSheet(destination) {
     const key = `${destination.id}:${destination.sheetId}`;
     if (configuredSheets.has(key)) return;
     const rowCount = Math.max(200, destination.rowCount || 200);
     try {
+      const lastRemovableColumn = Math.min(20, destination.columnCount || 20);
+      // The Sheets V2 dimension API uses one-based indexes: G is 7 and T is 20.
+      if (lastRemovableColumn >= 7) await deleteSheetDimension(destination, "COLUMNS", 7, lastRemovableColumn);
       await writeSheetValues(destination, "A1:F1", [["模块", "问题截图", "问题描述", "开发负责人", "状态", "备注"]]);
-      for (const [index, size] of [[1, 160], [2, 240], [3, 480], [4, 160], [5, 160], [6, 480]]) await setSheetDimension(destination, "COLUMNS", index, index, size);
+      for (const [index, size] of [[1, 160], [2, 160], [3, 480], [4, 112], [5, 112], [6, 480]]) await setSheetDimension(destination, "COLUMNS", index, index, size);
       await setSheetDimension(destination, "ROWS", 1, rowCount, 64);
+      await setSheetDimension(destination, "ROWS", 1, 1, 32);
+      await setSheetStyle(destination, "A1:F1", { backColor: "#3370FF", foreColor: "#FFFFFF", font: { bold: true } });
+      await setSheetStyle(destination, `E2:E${rowCount}`, { foreColor: "#FFFFFF" });
       await feishu(`/sheets/v2/spreadsheets/${encodeURIComponent(destination.id)}/dataValidation`, { method: "POST", headers: { "Content-Type": "application/json; charset=utf-8" }, body: JSON.stringify({ range: `${destination.sheetId}!E2:E${rowCount}`, dataValidationType: "list", dataValidation: { conditionValues: ["待修改", "已修改待验收", "验收通过", "暂不修改"], options: { multipleValues: false, highlightValidData: true, colors: ["#F59E0B", "#335cff", "#1fc16b", "#9CA3AF"] } } }) });
       configuredSheets.add(key);
     } catch (error) { error.stage = "configure_acceptance_sheet"; throw error; }
@@ -168,7 +182,10 @@ globalThis.UIReviewFeishu = (() => {
 
   async function appendSheetFeedback(body, destination) {
     await configureAcceptanceSheet(destination);
-    const appended = await feishu(`/sheets/v2/spreadsheets/${encodeURIComponent(destination.id)}/values_append?insertDataOption=INSERT_ROWS`, { method: "POST", headers: { "Content-Type": "application/json; charset=utf-8" }, body: JSON.stringify({ valueRange: { range: `${destination.sheetId}!A2:F2`, values: [[String(body.pageTitle || "Untitled"), "", String(body.question || "").trim(), "", "待修改", String(body.note || "").trim()]] } }) });
+    // Reuse the next preformatted row instead of inserting a new one. INSERT_ROWS
+    // creates a fresh row before the formatted range, which makes the newly added
+    // last row lose the sheet's row height, validation, and cell styling.
+    const appended = await feishu(`/sheets/v2/spreadsheets/${encodeURIComponent(destination.id)}/values_append?insertDataOption=OVERWRITE`, { method: "POST", headers: { "Content-Type": "application/json; charset=utf-8" }, body: JSON.stringify({ valueRange: { range: `${destination.sheetId}!A2:F2`, values: [[String(body.pageTitle || "Untitled"), "", String(body.question || "").trim(), "", "待修改", String(body.note || "").trim()]] } }) });
     const row = appended.updates?.updatedRange ? a1LastRow(appended.updates.updatedRange) : a1LastRow(appended.tableRange) + 1;
     try { await writeSheetImage(destination, `B${row}:B${row}`, screenshotBytes(body.screenshotDataUrl)); }
     catch (error) { error.stage = "write_sheet_cell_image"; throw error; }
