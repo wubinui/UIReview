@@ -7,3 +7,4 @@
 5. Explain the `https://open.feishu.cn/*` host permission as required for direct Feishu authentication and document/Sheet writes.
 6. Publish a privacy policy consistent with `PRIVACY.md` and disclose that screenshots are sent only after the user presses Send.
 7. In the store instructions, tell each user to create their own Feishu self-built application, publish its permissions, and add it as an editor of the destination document.
+8. Verify iframe-heavy applications: the toolbar should appear only once, while inspection works inside visible child frames.
