@@ -8,7 +8,7 @@ UIReview is a Chrome extension for inspecting live interfaces, comparing spacing
 
 Current version: **1.0.2**
 
-[Website](https://uirevu.com/) · [Usage guide](https://uirevu.com/docs.html) · [GitHub](https://github.com/wubinui/UIReview-plugin)
+[Add to Chrome](https://chromewebstore.google.com/detail/uireview/aciphknkafonjcakpmkmmgdpeejcnjda) · [Website](https://uirevu.com/) · [Usage guide](https://uirevu.com/docs.html) · [GitHub](https://github.com/wubinui/UIReview)
 
 ## What's new in 1.0.2
 
@@ -33,7 +33,11 @@ See the [changelog](CHANGELOG.md) for release notes.
 - Toggle X-ray mode, pixel rulers, and the native color picker.
 - Drag and collapse the toolbar; all credentials stay in local extension storage.
 
-## Install locally
+## Install
+
+Install UIReview from the [Chrome Web Store](https://chromewebstore.google.com/detail/uireview/aciphknkafonjcakpmkmmgdpeejcnjda), then pin it to the Chrome toolbar for quick access.
+
+### Install locally for development
 
 UIReview is a self-contained Manifest V3 extension. End users do not need Node.js, a local server, or a desktop bridge.
 
@@ -116,7 +120,7 @@ Load the repository root as an unpacked extension after making changes. There is
 zip -r UIReview-1.0.2.zip . -x '*.DS_Store' '*.zip' '.env*' '.git/*' 'node_modules/*'
 ```
 
-Upload the ZIP as a GitHub Release asset or submit it to the Chrome Web Store. The static website links to the latest release asset.
+Upload the ZIP as a GitHub Release asset or submit it to the Chrome Web Store. The static website links to the published Chrome Web Store listing.
 
 ## Privacy and license
 
