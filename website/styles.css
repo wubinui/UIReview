@@ -588,6 +588,42 @@ body.entered .site-footer {
   gap: 48px;
 }
 
+.privacy-date {
+  margin: -34px 0 48px;
+  color: var(--neutral-500);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.privacy-summary {
+  margin-bottom: 48px;
+  padding: 20px 22px;
+  border: 1px solid var(--neutral-200);
+  border-radius: 12px;
+  background: var(--neutral-100);
+}
+
+.privacy-summary p {
+  margin: 0;
+  color: var(--neutral-900);
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.privacy-copy .content-section {
+  gap: 16px;
+}
+
+.content-section a {
+  color: var(--neutral-900);
+  text-decoration-color: var(--neutral-300);
+  text-underline-offset: 3px;
+}
+
+.content-section a:hover {
+  text-decoration-color: var(--neutral-900);
+}
+
 .content-section,
 .release-entry {
   display: flex;

@@ -38,7 +38,7 @@ async function refresh() {
   const status = await UIReviewFeishu.status();
   configured = status.configured;
   updatePrimaryButton();
-  showStatus({ connected: configured, text: configured ? `应用已连接 · ${status.appId}` : "等待连接应用" });
+  showStatus({ connected: configured, text: configured ? `App connected · ${status.appId}` : "Waiting to connect" });
   appId.placeholder = configured ? status.appId : "App ID";
 }
 
@@ -58,19 +58,19 @@ form.addEventListener("submit", async event => {
   const nextSecret = appSecret.value.trim();
 
   if ((nextAppId && !nextSecret) || (!nextAppId && nextSecret)) {
-    showMessage("请同时填写 App ID 和 App Secret。", "error");
+    showMessage("Enter both the App ID and App Secret.", "error");
     (nextAppId ? appSecret : appId).focus();
     return;
   }
   if (!nextAppId && !nextSecret && !configured) {
-    showMessage("请输入飞书应用的 App ID 和 App Secret。", "error");
+    showMessage("Enter your Feishu app's App ID and App Secret.", "error");
     appId.focus();
     return;
   }
 
   setBusy(true);
   showMessage("");
-  showStatus({ text: "正在连接应用..." });
+  showStatus({ text: "Connecting..." });
   try {
     const result = nextAppId && nextSecret
       ? await UIReviewFeishu.saveConfig(nextAppId, nextSecret)
@@ -79,19 +79,19 @@ form.addEventListener("submit", async event => {
     updatePrimaryButton();
     appId.value = "";
     appSecret.value = "";
-    showStatus({ connected: true, text: `应用已连接 · ${result.appId}` });
+    showStatus({ connected: true, text: `App connected · ${result.appId}` });
     appId.placeholder = result.appId;
-    showMessage("连接成功，可以关闭此页面并开始使用 UIReview。", "success");
+    showMessage("App connected. Before sending, add this app as a collaborator with edit access to the destination document.", "success");
   } catch (error) {
-    showStatus({ error: true, text: "连接失败" });
-    showMessage(error.message || "飞书应用连接失败，请检查凭证后重试。", "error");
+    showStatus({ error: true, text: "Connection failed" });
+    showMessage(error.message || "Feishu app connection failed. Check your credentials and try again.", "error");
   } finally {
     setBusy(false);
   }
 });
 
 clearConfigButton.addEventListener("click", async () => {
-  if (!confirm("删除飞书凭证和已保存的文档列表？")) return;
+  if (!confirm("Delete the saved Feishu credentials and document list?")) return;
 
   setBusy(true);
   showMessage("");
@@ -102,16 +102,16 @@ clearConfigButton.addEventListener("click", async () => {
     appId.value = "";
     appSecret.value = "";
     appId.placeholder = "App ID";
-    showStatus({ text: "等待连接应用" });
-    showMessage("本地配置已删除。", "success");
+    showStatus({ text: "Waiting to connect" });
+    showMessage("Local configuration deleted.", "success");
   } catch (error) {
-    showMessage(error.message || "删除配置失败，请重试。", "error");
+    showMessage(error.message || "Could not delete the configuration. Try again.", "error");
   } finally {
     setBusy(false);
   }
 });
 
 refresh().catch(error => {
-  showStatus({ error: true, text: "无法读取连接状态" });
+  showStatus({ error: true, text: "Could not read connection status" });
   showMessage(error.message, "error");
 });

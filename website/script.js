@@ -506,7 +506,7 @@ window.addEventListener("touchstart", handleRealInteraction, { capture: true, pa
 window.addEventListener("scroll", requestScrollUpdate, { passive: true });
 window.addEventListener("resize", requestScrollUpdate);
 window.addEventListener("uireview-demo-install", () => {
-  window.location.href = "https://github.com/wubinui/UIReview/raw/refs/heads/main/UIReview-1.0.0.zip";
+  window.location.href = "https://chromewebstore.google.com/detail/uireview/aciphknkafonjcakpmkmmgdpeejcnjda";
 });
 
 setTimeout(() => document.body.classList.add("entered"), 900);

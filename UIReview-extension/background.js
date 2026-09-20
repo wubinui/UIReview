@@ -23,11 +23,35 @@ chrome.runtime.onStartup.addListener(protectLocalStorage);
 
 const ignoreLastError = () => void chrome.runtime.lastError;
 
-const sendToTab = (tabId, message) => {
+const sendToTab = (tabId, message, options = {}) => {
   try {
-    const pending = chrome.tabs.sendMessage(tabId, message, ignoreLastError);
+    const pending = chrome.tabs.sendMessage(tabId, message, options, ignoreLastError);
     if (pending && typeof pending.catch === "function") pending.catch(() => {});
   } catch (_) {}
+};
+
+const frameModes = new Set(["inspect", "typography", "guides", "xray", "eyedropper"]);
+const defaultFrameState = () => ({ enabled: false, mode: null });
+const normalizeFrameState = value => ({
+  enabled: value?.enabled === true,
+  mode: value?.enabled === true && frameModes.has(value?.mode) ? value.mode : null
+});
+const requestTopFrameState = (tabId, sendResponse) => {
+  let settled = false;
+  const finish = response => {
+    if (settled) return;
+    settled = true;
+    sendResponse(response?.ok ? response : { ok: true, state: defaultFrameState() });
+  };
+  try {
+    const pending = chrome.tabs.sendMessage(tabId, { type: "uireview-frame-state-query" }, { frameId: 0 }, response => {
+      const error = chrome.runtime.lastError;
+      finish(error ? null : response);
+    });
+    if (pending && typeof pending.then === "function") pending.then(finish).catch(() => finish(null));
+  } catch (_) {
+    finish(null);
+  }
 };
 
 const openSettings = sendResponse => {
@@ -55,6 +79,36 @@ chrome.action.onClicked.addListener(tab => {
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message?.type === "uireview-frame-state-request") {
+    const tabId = sender.tab?.id;
+    if (tabId == null || sender.frameId === 0) {
+      sendResponse({ ok: true, state: defaultFrameState() });
+      return;
+    }
+    requestTopFrameState(tabId, sendResponse);
+    return true;
+  }
+  if (message?.type === "uireview-frame-state-update") {
+    const tabId = sender.tab?.id;
+    if (tabId == null) {
+      sendResponse({ ok: false, error: "Unable to identify the inspected tab" });
+      return;
+    }
+    const state = normalizeFrameState(message.state);
+    sendToTab(tabId, { type: "uireview-frame-state", state });
+    sendResponse({ ok: true, state });
+    return;
+  }
+  if (message?.type === "uireview-top-command") {
+    const tabId = sender.tab?.id;
+    if (tabId == null) {
+      sendResponse({ ok: false, error: "Unable to identify the inspected tab" });
+      return;
+    }
+    sendToTab(tabId, { type: "uireview-top-command", command: message.command }, { frameId: 0 });
+    sendResponse({ ok: true });
+    return;
+  }
   if (message?.type === "capture-visible-tab") {
     try {
       const pending = chrome.tabs.captureVisibleTab(sender.tab?.windowId, { format: "png" }, dataUrl => {

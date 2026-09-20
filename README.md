@@ -4,11 +4,12 @@
 
 UIReview is a fast, self-contained Chrome extension for visual design review. Inspect interfaces, compare spacing, read layout and typography values, capture and annotate custom regions, and send feedback directly to Feishu/Lark documents or spreadsheets.
 
-Current version: **1.0.0**
+Current version: **1.0.3**
 
 ## Features
 
 - Element inspection with precise tag, ID, classes, size, box model, spacing, and flex-axis information
+- Same-origin and cross-origin iframe inspection with one synchronized top-level toolbar
 - Overlapping-element cycling and keyboard DOM hierarchy navigation
 - CSS selector finder with multi-match highlighting and previous/next navigation
 - Draggable live inspector plus multiple pinned comparison cards
@@ -97,7 +98,7 @@ UIReview keeps high-frequency work aligned with the browser's rendering cycle. P
 
 ```text
 UIReview/
-├── UIReview-1.0.0.zip              # Ready-to-install 1.0.0 package
+├── UIReview-1.0.3.zip              # Ready-to-install 1.0.3 package
 └── UIReview-extension/             # Chrome Manifest V3 extension source
     ├── manifest.json               # Extension configuration and permissions
     ├── content.js                  # Inspection, measurement, capture, and feedback UI

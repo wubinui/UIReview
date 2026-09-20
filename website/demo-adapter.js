@@ -79,6 +79,9 @@
       },
     },
     async sendMessage(message) {
+      if (message?.type === "uireview-frame-state-request") return { ok: true, state: { enabled: false, mode: null } };
+      if (message?.type === "uireview-frame-state-update") return { ok: true, state: message.state };
+      if (message?.type === "uireview-top-command") return { ok: true };
       if (message?.type === "capture-visible-tab") return captureViewport();
       if (message?.type === "document-state") return { ok: true, ...readDocuments() };
       if (message?.type === "save-document-state") {
