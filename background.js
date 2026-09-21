@@ -31,10 +31,14 @@ const sendToTab = (tabId, message, options = {}) => {
 };
 
 const frameModes = new Set(["inspect", "typography", "guides", "xray", "eyedropper"]);
-const defaultFrameState = () => ({ enabled: false, mode: null });
+// Keep the top-frame state briefly so iframes injected after the top document
+// can initialize from the current inspector mode instead of racing the query.
+const frameStates = new Map();
+const defaultFrameState = () => ({ enabled: false, mode: null, showPanel: true });
 const normalizeFrameState = value => ({
   enabled: value?.enabled === true,
-  mode: value?.enabled === true && frameModes.has(value?.mode) ? value.mode : null
+  mode: value?.enabled === true && frameModes.has(value?.mode) ? value.mode : null,
+  ...(typeof value?.showPanel === "boolean" ? { showPanel: value.showPanel } : {})
 });
 const requestTopFrameState = (tabId, sendResponse) => {
   let settled = false;
@@ -81,7 +85,16 @@ chrome.action.onClicked.addListener(tab => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message?.type === "uireview-frame-state-request") {
     const tabId = sender.tab?.id;
-    if (tabId == null || sender.frameId === 0) {
+    if (tabId == null) {
+      sendResponse({ ok: true, state: defaultFrameState() });
+      return;
+    }
+    const cached = frameStates.get(tabId);
+    if (cached) {
+      sendResponse({ ok: true, state: cached });
+      return;
+    }
+    if (sender.frameId === 0) {
       sendResponse({ ok: true, state: defaultFrameState() });
       return;
     }
@@ -94,7 +107,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sendResponse({ ok: false, error: "Unable to identify the inspected tab" });
       return;
     }
+    // The top document owns the shared state. A child frame can request a
+    // command, but must not publish its local state back to the whole tab.
+    // Otherwise a late iframe initialization (or a child-frame shortcut) can
+    // overwrite the top frame and make inspection disappear from iframes.
+    if (sender.frameId !== 0) {
+      sendResponse({ ok: false, error: "Only the top frame can publish UIReview state" });
+      return;
+    }
     const state = normalizeFrameState(message.state);
+    frameStates.set(tabId, state);
     sendToTab(tabId, { type: "uireview-frame-state", state });
     sendResponse({ ok: true, state });
     return;
@@ -184,3 +206,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 });
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if (changeInfo.status === "loading") frameStates.delete(tabId);
+});
+
+chrome.tabs.onRemoved.addListener(tabId => frameStates.delete(tabId));
