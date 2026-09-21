@@ -1,10 +1,8 @@
-<h1 align="center">
-  <img src="assets/icon.svg" alt="UIReview icon" width="48" height="48" />
-  &nbsp;
-  <img src="assets/uireview-logo.svg" alt="UIReview" width="144" height="48" />
-</h1>
+<p align="left">
+  <img src="UIReview-extension/assets/uireview-logo.svg" width="240" alt="UIReview">
+</p>
 
-UIReview is a Chrome extension for inspecting live interfaces, comparing spacing, reviewing typography, capturing annotated screenshots, and sending feedback to Feishu/Lark documents.
+UIReview is a fast, self-contained Chrome extension for visual design review. Inspect interfaces, compare spacing, read layout and typography values, capture and annotate custom regions, and send feedback directly to Feishu/Lark documents or spreadsheets.
 
 Current version: **1.0.4**
 
@@ -17,126 +15,127 @@ Current version: **1.0.4**
 - Synchronize the style-panel visibility switch across nested frames without allowing child frames to overwrite the active mode.
 - Wrap long style values to a maximum of two lines and keep feedback dialogs inside the viewport.
 
-## What's new in 1.0.3
-
-- Inspect elements and typography inside same-origin and cross-origin iframes.
-- Keep one toolbar in the top page while synchronizing inspection modes across nested frames.
-- Route screenshot and eyedropper shortcuts from a focused iframe back to the top page.
-
-## What's new in 1.0.2
-
-- Keep the final feedback row aligned with the existing Feishu Sheet formatting.
-- Format feedback Sheets automatically: remove columns G–T, style the header row, set the E column text color, and apply the requested column widths.
-- Fix invalid row and column dimension ranges that caused feedback sending to fail.
-
-## What's new in 1.0.1
-
-- Updated the toolbar UI.
-- Capture screenshots and send feedback directly from inspection mode, including visible highlights, spacing measurements, and style panels.
-
-See the [changelog](CHANGELOG.md) for release notes.
-
 ## Features
 
-- Inspect elements with layout and style details.
-- Compare spacing between a selected element and nearby elements.
-- Inspect typography tokens, colors, dimensions, margins, padding, and gaps.
-- Capture a custom region and annotate it with pen, arrow, rectangle, or ellipse tools.
-- Send screenshot feedback to Feishu/Lark Docs or Sheets.
-- Toggle X-ray mode, pixel rulers, and the native color picker.
-- Drag and collapse the toolbar; all credentials stay in local extension storage.
+- Element inspection with precise tag, ID, classes, size, box model, spacing, and flex-axis information
+- Same-origin and cross-origin iframe inspection with one synchronized top-level toolbar
+- Overlapping-element cycling and keyboard DOM hierarchy navigation
+- CSS selector finder with multi-match highlighting and previous/next navigation
+- Draggable live inspector plus multiple pinned comparison cards
+- Best-effort author-style forcing for detected `:hover`, `:focus`, and `:active` states
+- Typography inspection with text color, font size, font weight, line height, radius, background, and opacity
+- Automatic spacing measurements from the locked element to the element under the cursor
+- Pixel rulers along the top and left edges of the viewport
+- X-ray mode for quickly viewing page structure
+- Native eyedropper with HEX and RGB values and one-click HEX copy
+- Custom region screenshots with pen, arrow, rectangle, ellipse, and undo tools
+- Layered screenshot and feedback-card transitions with reduced-motion support
+- Direct feedback delivery to Feishu/Lark documents and spreadsheets
+- Frame-coalesced inspection, cached geometry reads, and GPU-accelerated dragging
+- Self-contained browser extension: no Node.js, local server, or Bridge required
 
-## Install
+## Installation
 
-Install UIReview from the [Chrome Web Store](https://chromewebstore.google.com/detail/uireview/aciphknkafonjcakpmkmmgdpeejcnjda), then pin it to the Chrome toolbar for quick access.
+### Chrome Web Store
 
-### Install locally for development
+Install UIReview from the Chrome Web Store, then click the UIReview icon in the browser toolbar. The settings page opens automatically on first install.
 
-UIReview is a self-contained Manifest V3 extension. End users do not need Node.js, a local server, or a desktop bridge.
+### Load from source
 
-1. Open `chrome://extensions` in Chrome.
-2. Enable **Developer mode**.
-3. Click **Load unpacked** and select the **repository root** (the folder containing `manifest.json`).
-4. Open the extension settings and connect your own Feishu/Lark application.
+1. Clone or download this repository.
+2. Open `chrome://extensions` in Chrome.
+3. Enable **Developer mode**.
+4. Click **Load unpacked**.
+5. Select the `UIReview-extension/` folder.
+
+UIReview is opt-in and remains hidden until you click the toolbar icon or use the extension shortcut.
 
 ## Connect Feishu/Lark
 
-Create a self-built application in the [Feishu/Lark Open Platform](https://open.feishu.cn/). Grant these application scopes, then publish the application version so they take effect:
+Each user connects their own Feishu/Lark self-built application:
 
-- `docx:document` — create and edit Docs content.
-- `drive:drive` — access files and spreadsheets.
-- `wiki:node:read` — resolve Wiki document links.
+1. Create an enterprise self-built application in the [Feishu Open Platform](https://open.feishu.cn/app).
+2. Request the required cloud document, spreadsheet, drive media, and Wiki permissions, then publish an application version.
+3. Open UIReview settings, enter the App ID and App Secret, and click **Continue**.
+4. In the feedback window, add a Feishu/Lark document or spreadsheet link and make sure the application has edit access.
 
-Enter the App ID and App Secret in UIReview settings. Add the application as an editor of the destination document or spreadsheet. Credentials are stored only in `chrome.storage.local` and are never injected into inspected pages.
+After a successful connection, the primary settings button changes to **Close** and closes the settings tab. The connected state and App ID remain visible until the local configuration is deleted.
 
-API permissions and access to the destination file are separate requirements. An enabled permission allows the application to call an API; it does not give the application access to every document. Connecting in UIReview verifies the application credentials, not its access to your destination.
-
-### Grant access to the destination
-
-1. Open the Feishu document or spreadsheet that will receive screenshot feedback.
-2. Ask the file owner to add the configured self-built application and grant it **edit access**. In supported documents, open the top-right **More (…) → Add document application (添加文档应用)** menu. Menu labels and availability may vary by file type and account permissions.
-3. Confirm that the added application matches the App ID configured in UIReview. Your personal account's access to the file does not grant access to the application.
-4. For `/wiki/` links, ask the knowledge base administrator to grant the application access to the target node as well. The `wiki:node:read` API permission alone does not grant node access.
-5. Return to UIReview and retry adding the destination or sending feedback.
-
-### Troubleshoot permission errors
-
-If Feishu reports `node permission denied` or `tenant needs read permission`, the application cannot access the target node. Follow the [destination access steps above](#grant-access-to-the-destination), even if all three API permissions already show as enabled in the Open Platform.
-
-If the application is missing from the selection list, confirm that it has been published and belongs to the same organization as the destination. Ask the file owner or administrator to check access if you cannot find the application menu. If access is already granted, verify that it was granted to the same application configured in UIReview and, for Wiki links, to the correct knowledge base node.
+UIReview calls Feishu directly from the Chrome extension service worker. It does not use a developer server. App credentials and destination history are stored only in the current browser's extension storage; they are never injected into inspected pages or committed to this repository.
 
 ## Controls
 
-Click the browser toolbar button to open UIReview, then use the shortcuts below. While a tool is active, page interaction is blocked so elements can be inspected safely.
+The floating toolbar opens expanded with no active tool. It can be dragged, and hovering a tool shows its English name and shortcut. The arrow segments beside Inspect and Screenshot open their related menus. The main Menu contains Inspector settings and an explicit Exit UIReview action. Menus and settings automatically open above or below the toolbar and stay inside the viewport when the toolbar is placed near an edge. Press `Esc` to close the current menu, panel, or active tool first; when nothing is active, press `Esc` again to collapse the toolbar into the UIReview logo. Click the logo to expand it, or long-press and drag the logo to move it without expanding. The browser toolbar icon still fully shows or hides UIReview.
 
-| Shortcut | Action |
-| --- | --- |
-| <kbd>I</kbd> | Inspect elements |
-| <kbd>F</kbd> | Find by CSS selector |
-| <kbd>C</kbd> | Capture screenshot feedback |
-| <kbd>T</kbd> | Inspect typography |
-| <kbd>R</kbd> | Show pixel rulers |
-| <kbd>X</kbd> | Toggle X-ray view |
-| <kbd>P</kbd> | Open the eyedropper |
-| <kbd>Esc</kbd> | Close the current layer or collapse the toolbar |
+| Tool | Shortcut | Description |
+| --- | --- | --- |
+| Inspect | `I` | Inspect elements and layout information |
+| Typography | `T` | Inspect text styles |
+| Rulers | `R` | Show top and left pixel rulers |
+| Eyedropper | `P` | Use the browser's native color picker |
+| X-ray | `X` | View page structure |
+| CSS Selector Finder | `F` | Find and highlight elements with a native CSS selector |
+| Screenshot Feedback | `C` | Capture a region and write feedback |
+| Menu | `M` | Open Inspector settings or exit UIReview |
+| Close / collapse | `Esc` | Close the current UI layer or tool, then collapse the idle toolbar |
 
-Closing the active tool restores normal page interaction. After selecting an element, move the pointer over another element to see spacing measurements.
+In Inspect mode, hover an element to see its box model and layout details, then click it to keep its border selected. Click the same element again to cancel the selection, or click another element to move the selection. Move over any other element to measure horizontal and vertical distances automatically—no modifier key is required. Flex and grid containers also outline their visible direct children. Use `Tab` / `Shift + Tab` to cycle through overlapping elements under the pointer, `Alt/Option + Shift + ↑` to select the parent, and `Alt/Option + Shift + ↓` to select the first visible child. Press `Space` to fix the style panel in place and enable dragging; press `Space` again to resume following the pointer.
+
+The box-model overlay uses tinted regions and per-edge values for margin, padding, and gap. When the selected element has matching author CSS, the inspector can preview detected `:hover`, `:focus`, and `:active` states. This is a best-effort browser-extension preview rather than Chrome DevTools' internal pseudo-state engine; cross-origin stylesheets and complex ancestor pseudo selectors may not be available.
+
+In Screenshot Feedback mode, drag over an area and release; the feedback window opens immediately without an extra confirmation step. Screenshot cropping and destination loading continue in the background, with a lightweight preview state instead of blocking the feedback form.
 
 ## Screenshot feedback
 
-Choose **Screenshot Feedback**, drag a region, and release. The feedback panel opens automatically while the preview and destination document load in the background. Add a description, optional note, and annotations, then press **Send**. For Sheets destinations, UIReview creates the columns `Module`, `Screenshot`, `Description`, `Developer`, `Status`, and `Notes`; status defaults to `To be modified`, and the screenshot is inserted as an in-cell image.
+The feedback workflow supports:
 
-While inspecting elements, typography, or CSS selector matches, press <kbd>C</kbd> or click **Screenshot Feedback** to capture the current inspection details. Highlights, spacing measurements, and visible style panels stay in place while you select a region and are included in the screenshot. Include the relevant panel in your selection; use <kbd>Space</kbd> before capturing to fix and move it if needed. The toolbar and capture controls are excluded. Press <kbd>Esc</kbd> to cancel and return to inspection. When typing a CSS selector, use the screenshot toolbar button so the shortcut does not interrupt your query.
+- Custom region capture and retake
+- Pen, arrow, rectangle, and ellipse annotations
+- `Undo` or `Ctrl/Cmd + Z` for the latest annotation
+- Feishu/Lark document or spreadsheet destination selection
+- Animated destination-card expansion and collapse
+- An issue description and optional note
+- Coordinated feedback-window entrance and exit animations, including close button, backdrop click, and `Esc`
 
-| Function | Action | Shortcut |
-| --- | --- | --- |
-| Send | Sync to cloud docs | <kbd>Enter</kbd> |
-| Undo | Undo annotation | <kbd>⌘&nbsp;Command</kbd>&nbsp;+&nbsp;<kbd>Z</kbd> |
+After sending, the request continues in the background and the capture tool remains available for the next issue.
 
-When an input method is composing text (for example, selecting Chinese characters), Enter confirms the text without sending feedback. Press Enter again after confirmation to send, or Shift + Enter to insert a line break in the description.
+## Performance
 
-## Development checks
+UIReview keeps high-frequency work aligned with the browser's rendering cycle. Pointer inspection is coalesced to one update per animation frame, geometry and computed-style reads are reused within each render, and complex flex/grid analysis is bounded to prevent large pages from blocking interaction. The toolbar, collapsed logo, and inspector panels use compositor-friendly transforms while dragging, committing their final position only after release.
 
-```bash
-python3 -m json.tool manifest.json >/dev/null
-node --check background.js
-node --check content.js
-node --check feishu-client.js
-node --check options.js
+## Repository layout
+
+```text
+UIReview/
+├── UIReview-1.0.3.zip              # Ready-to-install 1.0.3 package
+└── UIReview-extension/             # Chrome Manifest V3 extension source
+    ├── manifest.json               # Extension configuration and permissions
+    ├── content.js                  # Inspection, measurement, capture, and feedback UI
+    ├── background.js               # Service worker and Feishu request entry point
+    ├── feishu-client.js            # Feishu authentication and document/sheet writes
+    ├── options.html                 # Settings page
+    └── assets/                     # Logo and extension icons
 ```
 
-Load the repository root as an unpacked extension after making changes. There is no build step.
+This repository contains the browser extension source and the current installable package. It does not contain the retired Node.js service, obsolete release archives, `.env` files, or Feishu credentials.
 
-## Package for release
+## Privacy and security
+
+Read [`UIReview-extension/PRIVACY.md`](UIReview-extension/PRIVACY.md). UIReview has no cloud backend. Feishu requests are sent directly by the extension after the user explicitly submits feedback, and inspected pages cannot read stored credentials.
+
+## Development
+
+The project uses plain HTML, CSS, and JavaScript and has no build step. After editing, click the extension's reload button in `chrome://extensions`.
+
+Run these checks before committing:
 
 ```bash
-zip -r UIReview-1.0.3.zip . -x '*.DS_Store' '*.zip' '.env*' '.git/*' 'node_modules/*'
+node --check UIReview-extension/content.js
+node --check UIReview-extension/background.js
+node --check UIReview-extension/feishu-client.js
+node --check UIReview-extension/options.js
 ```
 
-Upload the ZIP as a GitHub Release asset or submit it to the Chrome Web Store. The static website links to the published Chrome Web Store listing.
+## License
 
-## Privacy and license
-
-See [PRIVACY.md](PRIVACY.md) and [STORE-PUBLISHING.md](STORE-PUBLISHING.md). Choose and add an OSI-approved license (for example, MIT or Apache-2.0) before publishing this repository as open source.
-
-This repository contains only the browser extension. It does not contain the marketing website, local service, generated output, or release ZIP files.
+License and distribution terms will be added in a future release.

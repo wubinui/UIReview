@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="UIReview release notes and product updates." />
+    <title>Changelog — UIReview</title>
+    <link rel="icon" href="assets/figma/brand-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=20260913-3" />
+  </head>
+  <body class="legal-body">
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="UIReview home">
+          <img src="assets/figma/brand-icon.svg" width="24" height="24" alt="" />
+          <img src="assets/figma/brand-wordmark.svg" width="72" height="24" alt="UIReview" />
+        </a>
+        <a class="install-button" href="https://chromewebstore.google.com/detail/uireview/aciphknkafonjcakpmkmmgdpeejcnjda">Add to Chrome</a>
+      </nav>
+    </header>
+
+    <main class="legal-page">
+      <article class="legal-content content-article" aria-labelledby="changelog-title">
+        <p class="content-kicker">Changelog</p>
+        <h1 id="changelog-title">What’s new in UIReview.</h1>
+        <div class="content-copy">
+          <section class="release-entry">
+            <div class="release-meta">
+              <h2>Version 1.0.3</h2>
+              <span>September 18, 2026</span>
+            </div>
+            <ul>
+              <li>Inspect elements and typography inside same-origin and cross-origin iframes.</li>
+              <li>Keep one toolbar in the top page while synchronizing inspection modes across nested frames.</li>
+              <li>Route screenshot and eyedropper shortcuts from a focused iframe back to the top page.</li>
+            </ul>
+          </section>
+          <section class="release-entry">
+            <div class="release-meta">
+              <h2>Version 1.0.2</h2>
+              <span>September 15, 2026</span>
+            </div>
+            <ul>
+              <li>Preserve Feishu Sheet formatting when appending the final feedback row.</li>
+              <li>Format feedback tables automatically and fix invalid row and column dimension ranges.</li>
+              <li>Standardize the settings page in English.</li>
+            </ul>
+          </section>
+          <section class="release-entry">
+            <div class="release-meta">
+              <h2>Version 1.0.1</h2>
+              <span>September 14, 2026</span>
+            </div>
+            <ul>
+              <li>Updated the toolbar UI.</li>
+              <li>Capture screenshots from inspection mode with highlights, measurements, and style panels intact.</li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+      <footer class="site-footer">
+        <a href="about.html">About</a>
+        <a href="docs.html">Docs</a>
+        <a href="changelog.html" aria-current="page">Changelog</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="https://github.com/wubinui/UIReview" target="_blank" rel="noreferrer">Github</a>
+      </footer>
+    </main>
+    <script>
+      const siteHeader = document.querySelector(".site-header");
+      const updateHeaderBackground = () => siteHeader.classList.toggle("is-scrolled", window.scrollY > 0);
+      window.addEventListener("scroll", updateHeaderBackground, { passive: true });
+      updateHeaderBackground();
+    </script>
+  </body>
+</html>

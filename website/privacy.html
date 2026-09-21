@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="How UIReview collects, processes, stores, protects, and shares extension data." />
+    <title>Privacy Policy — UIReview</title>
+    <link rel="icon" href="assets/figma/brand-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=20260920-1" />
+  </head>
+  <body class="legal-body">
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="UIReview home">
+          <img src="assets/figma/brand-icon.svg" width="24" height="24" alt="" />
+          <img src="assets/figma/brand-wordmark.svg" width="72" height="24" alt="UIReview" />
+        </a>
+        <a class="install-button" href="https://chromewebstore.google.com/detail/uireview/aciphknkafonjcakpmkmmgdpeejcnjda">Add to Chrome</a>
+      </nav>
+    </header>
+
+    <main class="legal-page">
+      <article class="legal-content content-article" aria-labelledby="privacy-title">
+        <p class="content-kicker">Privacy</p>
+        <h1 id="privacy-title">UIReview Privacy Policy</h1>
+        <p class="privacy-date">Effective and last updated September 20, 2026</p>
+
+        <div class="privacy-summary" aria-label="Privacy summary">
+          <p>
+            UIReview processes interface inspection and screenshot drafts locally. It sends feedback only after you press
+            <strong>Send</strong>, directly to the Feishu/Lark destination you selected using your own self-built application.
+            UIReview has no cloud backend, analytics, advertising, or sale of user data.
+          </p>
+        </div>
+
+        <div class="content-copy privacy-copy">
+          <section class="content-section">
+            <h2>1. Scope</h2>
+            <p>
+              This policy explains how the UIReview Chrome extension handles user data. UIReview is an interface inspection
+              and visual-feedback tool. It does not operate a UIReview cloud backend and does not use advertising or analytics
+              SDKs.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>2. Data UIReview handles</h2>
+            <ul>
+              <li>
+                <strong>Website content and interface data.</strong> When you activate an inspection tool, UIReview reads the
+                current page's DOM structure and visible element information, including text, computed CSS, layout, spacing,
+                typography, colors, and iframe context. UIReview does not read cookies, passwords, form submissions, or network
+                request bodies for this feature.
+              </li>
+              <li>
+                <strong>Screenshots and annotations.</strong> When you start Capture region, UIReview captures the visible tab,
+                crops it to the region you choose, and may add your visual annotations.
+              </li>
+              <li>
+                <strong>Feedback and page context.</strong> UIReview handles your issue description, optional note, current page
+                title, current page URL, viewport size, selected screenshot, and selected destination while you prepare feedback.
+                The exact fields written to Feishu/Lark depend on whether the destination is a document or spreadsheet.
+              </li>
+              <li>
+                <strong>Feishu/Lark authentication information.</strong> If you connect a self-built application, UIReview
+                handles the App ID and App Secret you provide. They are sent only to Feishu Open Platform to obtain a temporary
+                tenant access token.
+              </li>
+              <li>
+                <strong>Destination information.</strong> UIReview handles document, spreadsheet, sheet, or Wiki identifiers and
+                links, destination names, and your selected destination so it can validate and reuse them.
+              </li>
+              <li>
+                <strong>Clipboard data.</strong> UIReview writes a color value to the clipboard only when you choose Copy in the
+                eyedropper. It does not read clipboard contents.
+              </li>
+            </ul>
+            <p>
+              UIReview does not collect names, email addresses, payment data, health data, precise location, advertising
+              identifiers, or browsing history unrelated to its interface-inspection and feedback features.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>3. Collection and processing</h2>
+            <ul>
+              <li>Page interface data is read locally only while you use UIReview's inspection tools.</li>
+              <li>A visible-tab image is captured only after you start the screenshot feature and select a region.</li>
+              <li>Feedback is prepared locally and transmitted only after you choose a destination and press <strong>Send</strong>.</li>
+              <li>
+                Feishu/Lark credentials are collected only when you enter them in UIReview settings and press
+                <strong>Continue</strong>. UIReview uses them to authenticate with Feishu/Lark and stores them locally for later
+                submissions you request.
+              </li>
+              <li>A destination link is sent to Feishu/Lark for validation only when you add or select that destination.</li>
+            </ul>
+            <p>
+              UIReview uses this data solely to inspect the current interface, create the requested screenshot or annotation,
+              validate your destination, and send your feedback. It is not used for advertising, profiling, credit decisions,
+              generalized market research, or any unrelated purpose.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>4. Local storage and retention</h2>
+            <ul>
+              <li>
+                DOM, style, layout, and typography data is processed in browser memory and is not saved to
+                <code>chrome.storage.local</code>.
+              </li>
+              <li>
+                Screenshot drafts, annotations, issue text, and notes remain in browser memory during the active workflow. They
+                are cleared when the workflow is cancelled or completed, the page is reloaded or closed, or the extension
+                process ends. UIReview keeps no separate local archive of submitted feedback.
+              </li>
+              <li>
+                Your Feishu/Lark App ID, App Secret, saved destination metadata, and selected destination remain in
+                <code>chrome.storage.local</code> until you clear the connection in settings or uninstall UIReview.
+              </li>
+              <li>
+                A Feishu/Lark tenant access token is cached only in the extension service worker's memory until it expires, you
+                clear the connection, or the service worker stops.
+              </li>
+            </ul>
+            <p>
+              UIReview does not use Chrome Sync for these values. The UIReview developer does not receive or retain them on a
+              UIReview server.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>5. Sharing and external transmission</h2>
+            <p>
+              UIReview shares data only with the <strong>Feishu/Lark Open Platform</strong>, using your own self-built
+              application, when required for a feature you explicitly request:
+            </p>
+            <ul>
+              <li>App ID and App Secret are sent to Feishu/Lark to authenticate your application.</li>
+              <li>Destination links or identifiers are sent to Feishu/Lark to resolve and validate the destination.</li>
+              <li>
+                After you press <strong>Send</strong>, a Feishu document receives the issue description, screenshot, page title,
+                page URL, viewport size, and submission time. A spreadsheet receives the page title, screenshot, issue
+                description, optional note, and review status.
+              </li>
+            </ul>
+            <p>
+              All external transmissions use HTTPS. Content written to Feishu/Lark is governed by your organization, application
+              permissions, destination access, and Feishu/Lark's own terms and privacy practices. UIReview cannot access or
+              delete that cloud content on your behalf.
+            </p>
+            <p>
+              UIReview does not send data to UIReview-controlled servers, analytics providers, advertisers, or data brokers. It
+              does not sell user data or permit the developer or other humans to read it. It does not transfer data for
+              personalized advertising, retargeting, or monetization.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>6. Security</h2>
+            <p>
+              Stored configuration remains in your local Chrome extension storage. UIReview configures that storage for trusted
+              extension contexts where Chrome supports the restriction; its code does not inject credentials into inspected
+              pages or expose them to UIReview content scripts. Credentials and feedback are transmitted only to
+              <code>https://open.feishu.cn/</code> over HTTPS.
+            </p>
+            <p>
+              No storage or transmission method is completely secure. Protect your Chrome profile and use a dedicated
+              Feishu/Lark application with only the required permissions. If credentials may have been exposed, rotate the App
+              Secret in Feishu/Lark and clear the saved connection in UIReview.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>7. Chrome permissions</h2>
+            <ul>
+              <li><code>activeTab</code> — captures the visible tab only for a screenshot you initiate.</li>
+              <li><code>storage</code> — stores connection details and reusable destination metadata locally.</li>
+              <li><code>clipboardWrite</code> — copies a selected color; UIReview does not read the clipboard.</li>
+              <li>
+                Website access (<code>&lt;all_urls&gt;</code>, including frames) — enables user-initiated inspection and region
+                selection on arbitrary pages and visible iframes. It is not used for background tracking or advertising.
+              </li>
+              <li>
+                <code>https://open.feishu.cn/*</code> — authenticates your application, validates destinations, uploads
+                screenshots, and writes feedback to your selected destination.
+              </li>
+            </ul>
+          </section>
+
+          <section class="content-section">
+            <h2>8. Your controls and deletion</h2>
+            <p>
+              You control when UIReview opens, which tool runs, what region is captured, what feedback is written, which
+              destination receives it, and whether to press <strong>Send</strong>.
+            </p>
+            <p>
+              Choose <strong>Clear</strong> in UIReview settings to delete the stored App ID, App Secret, saved destinations, and
+              selected destination. Uninstalling UIReview removes its local extension data under Chrome's normal
+              extension-removal behavior. To delete feedback already submitted to Feishu/Lark, delete it from the destination or
+              ask its administrator; UIReview has no cloud copy to delete.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>9. Chrome Web Store Limited Use</h2>
+            <p>
+              The use of information received from Google APIs will adhere to the Chrome Web Store User Data Policy, including
+              the Limited Use requirements. Data is used only to provide or improve UIReview's single-purpose, user-facing review
+              features. UIReview does not use or transfer user data for personalized advertising, sell it, use it for unrelated
+              purposes, or permit human access except when you explicitly request support and consent to sharing specific
+              information, or when required for security or applicable law.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>10. Website</h2>
+            <p>
+              The UIReview website is static. It does not include UIReview analytics, advertising trackers, or an account system
+              and does not intentionally set tracking cookies. The hosting provider may process standard request information,
+              such as IP address and request headers, to deliver and secure the site under its own privacy practices.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>11. Policy changes</h2>
+            <p>
+              If UIReview's data practices change, this policy will be updated before those practices are released. Material
+              changes will also be disclosed through the extension or Chrome Web Store listing when required.
+            </p>
+          </section>
+
+          <section class="content-section">
+            <h2>12. Contact</h2>
+            <p>
+              For privacy questions or requests, open an issue in the
+              <a href="https://github.com/wubinui/UIReview/issues" target="_blank" rel="noreferrer">UIReview GitHub repository</a>.
+              Do not include App Secrets, screenshots, private document links, or other sensitive data in a public issue.
+            </p>
+          </section>
+        </div>
+      </article>
+
+      <footer class="site-footer">
+        <a href="about.html">About</a>
+        <a href="docs.html">Docs</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="privacy.html" aria-current="page">Privacy</a>
+        <a href="https://github.com/wubinui/UIReview" target="_blank" rel="noreferrer">Github</a>
+      </footer>
+    </main>
+    <script>
+      const siteHeader = document.querySelector(".site-header");
+      const updateHeaderBackground = () => siteHeader.classList.toggle("is-scrolled", window.scrollY > 0);
+      window.addEventListener("scroll", updateHeaderBackground, { passive: true });
+      updateHeaderBackground();
+    </script>
+  </body>
+</html>

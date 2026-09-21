@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="UIReview installation, inspection, screenshot feedback, and keyboard command documentation." />
+    <title>Docs — UIReview</title>
+    <link rel="icon" href="assets/figma/brand-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=20260913-3" />
+  </head>
+  <body class="legal-body">
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="UIReview home">
+          <img src="assets/figma/brand-icon.svg" width="24" height="24" alt="" />
+          <img src="assets/figma/brand-wordmark.svg" width="72" height="24" alt="UIReview" />
+        </a>
+        <a class="install-button" href="https://chromewebstore.google.com/detail/uireview/aciphknkafonjcakpmkmmgdpeejcnjda">Add to Chrome</a>
+      </nav>
+    </header>
+
+    <main class="legal-page">
+      <article class="legal-content content-article" aria-labelledby="docs-title">
+        <p class="content-kicker">Docs</p>
+        <h1 id="docs-title">Start reviewing with UIReview.</h1>
+        <div class="content-copy">
+          <section class="content-section">
+            <h2>Install</h2>
+            <ol>
+              <li>Download UIReview and open <code>chrome://extensions</code>.</li>
+              <li>Enable Developer mode, choose Load unpacked, and select the extension folder.</li>
+              <li>Click the UIReview toolbar icon to open the floating review tools.</li>
+            </ol>
+          </section>
+          <section class="content-section">
+            <h2>Inspect and compare</h2>
+            <p>
+              Press <code>I</code> and move across the page to inspect box model, layout, color, and typography values. Click
+              an element to lock it, then hover another element to compare spacing. Press Space to fix the style panel for
+              dragging, and press Space again to resume cursor following.
+            </p>
+            <p>
+              Version 1.0.3 also inspects elements and typography inside same-origin and cross-origin iframes while keeping a
+              single toolbar in the top page.
+            </p>
+          </section>
+          <section class="content-section">
+            <h2>Screenshot feedback</h2>
+            <p>
+              Press <code>C</code>, drag over the region you want to capture, and release. Add pen, arrow, rectangle, or ellipse
+              annotations, describe the issue, choose a destination, and send it directly to Feishu or Lark.
+            </p>
+          </section>
+          <section class="content-section">
+            <h2>Commands</h2>
+            <dl class="command-list">
+              <div><dt><code>I</code></dt><dd>Inspect elements</dd></div>
+              <div><dt><code>F</code></dt><dd>Find by CSS selector</dd></div>
+              <div><dt><code>C</code></dt><dd>Capture screenshot feedback</dd></div>
+              <div><dt><code>T</code></dt><dd>Inspect typography</dd></div>
+              <div><dt><code>R</code></dt><dd>Show pixel rulers</dd></div>
+              <div><dt><code>X</code></dt><dd>Toggle X-ray view</dd></div>
+              <div><dt><code>P</code></dt><dd>Open the eyedropper</dd></div>
+              <div><dt><code>Esc</code></dt><dd>Close the current layer or collapse the toolbar</dd></div>
+            </dl>
+          </section>
+          <section class="content-section">
+            <h2>Connect Feishu</h2>
+            <p>
+              Create a self-built application in the Feishu Open Platform, add the required document and drive permissions,
+              then enter its App ID and App Secret in UIReview settings. Credentials remain in local extension storage.
+            </p>
+          </section>
+        </div>
+      </article>
+
+      <footer class="site-footer">
+        <a href="about.html">About</a>
+        <a href="docs.html" aria-current="page">Docs</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="https://github.com/wubinui/UIReview" target="_blank" rel="noreferrer">Github</a>
+      </footer>
+    </main>
+    <script>
+      const siteHeader = document.querySelector(".site-header");
+      const updateHeaderBackground = () => siteHeader.classList.toggle("is-scrolled", window.scrollY > 0);
+      window.addEventListener("scroll", updateHeaderBackground, { passive: true });
+      updateHeaderBackground();
+    </script>
+  </body>
+</html>
